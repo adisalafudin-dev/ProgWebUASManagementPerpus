@@ -2,12 +2,7 @@
  * useDashboardData
  *
  * Hook untuk mengambil semua data yang dibutuhkan Admin Dashboard Perpustakaan.
- * Data bersumber dari Open Library Public API melalui dashboardService.
- *
- * Migrasi ke NestJS:
- *   1. Ganti import fungsi dari dashboardService dengan endpoint NestJS.
- *   2. Sesuaikan normalisasi data di dashboardService.js jika shape berbeda.
- *   3. Hook ini dan komponen yang menggunakannya TIDAK perlu diubah.
+ * Semua data sekarang diambil dari backend NestJS melalui dashboardService.
  */
 
 import { useState, useEffect, useCallback } from "react";
@@ -126,7 +121,7 @@ export function useDashboardData() {
           id: "total-books",
           label: "Total Buku",
           value: statsRaw.totalBooks.toLocaleString("id-ID"),
-          sub: "Koleksi Open Library",
+          sub: "Koleksi perpustakaan",
           icon: "BookOpen",
           accent: "blue",
         },

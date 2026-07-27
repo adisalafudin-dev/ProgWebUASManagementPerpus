@@ -313,10 +313,17 @@ export default function AdminBooksPage() {
                       {displayValue(book.isbn)}
                     </td>
                     <td className="px-5 py-3">
-                      {book.category?.name ? (
-                        <span className="rounded-md bg-indigo-50 px-2 py-1 text-[11px] font-medium text-indigo-700">
-                          {book.category.name}
-                        </span>
+                      {book.categories?.length ? (
+                        <div className="flex flex-wrap gap-1 max-w-[140px]">
+                          {book.categories.map((cat) => (
+                            <span
+                              key={cat.id}
+                              className="rounded-md bg-indigo-50 px-2 py-1 text-[11px] font-medium text-indigo-700"
+                            >
+                              {cat.name}
+                            </span>
+                          ))}
+                        </div>
                       ) : (
                         <span className="text-slate-400">—</span>
                       )}

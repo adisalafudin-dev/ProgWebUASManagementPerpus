@@ -161,7 +161,7 @@ export default function AdminBookDetailPage() {
 
   const fields = [
     ["Penulis", book.author],
-    ["Kategori", book.category?.name],
+    ["Kategori", book.categories?.map((c) => c.name).join(", ")],
     ["Penerbit", book.publisher],
     ["Tahun Terbit", book.publishedYear],
     ["ISBN", book.isbn],

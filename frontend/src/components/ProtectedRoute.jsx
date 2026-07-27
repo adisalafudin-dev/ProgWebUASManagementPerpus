@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
     return (
       <Navigate
         to="/login"
-        state={{ redirectTo: location.pathname }}
+        state={{ redirectTo: location.pathname, protected: true }}
         replace
       />
     );

@@ -1,4 +1,6 @@
 import {
+  ArrayNotEmpty,
+  IsArray,
   IsInt,
   IsOptional,
   IsString,
@@ -26,8 +28,10 @@ export class CreateBookDto {
   @Min(0)
   stock: number;
 
-  @IsUUID()
-  categoryId: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsUUID('4', { each: true })
+  categoryIds: string[];
 
   @IsOptional()
   @IsInt()

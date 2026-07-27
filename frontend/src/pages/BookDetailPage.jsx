@@ -19,6 +19,7 @@ export default function BookDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isBorrowing, setIsBorrowing] = useState(false);
+  const [hasActiveBorrowing, setHasActiveBorrowing] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -37,7 +38,8 @@ export default function BookDetailPage() {
         if (isMounted) {
           console.error("Gagal mengambil detail buku:", err);
           setError(
-            err?.message || "Buku tidak ditemukan atau server mengalami kendala."
+            err?.message ||
+              "Buku tidak ditemukan atau server mengalami kendala.",
           );
           setIsLoading(false);
         }
@@ -47,6 +49,33 @@ export default function BookDetailPage() {
       isMounted = false;
     };
   }, [id]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (!isAuthenticated || !id) {
+      setHasActiveBorrowing(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    borrowingApi
+      .getMyBorrowings()
+      .then((data) => {
+        if (!isMounted) return;
+        const hasBorrowed = Array.isArray(data)
+          ? data.some((b) => b.status === "dipinjam" && b.book?.id === id)
+          : false;
+        setHasActiveBorrowing(hasBorrowed);
+      })
+      .catch(() => {
+        if (isMounted) setHasActiveBorrowing(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, isAuthenticated]);
 
   const isFavorite = book ? favoriteIds.has(book.id) : false;
 
@@ -84,7 +113,8 @@ export default function BookDetailPage() {
             Buku Tidak Ditemukan
           </h2>
           <p className="font-crimson text-textSecondary mb-6">
-            {error || "Mohon periksa kembali tautan yang Anda gunakan atau kembali ke katalog."}
+            {error ||
+              "Mohon periksa kembali tautan yang Anda gunakan atau kembali ke katalog."}
           </p>
           <div className="flex justify-center gap-3">
             <button
@@ -107,13 +137,21 @@ export default function BookDetailPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Breadcrumb / Back button */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-textSecondary">
-        <Link to="/books" className="hover:text-primary transition-colors flex items-center gap-1 font-semibold">
+      <nav
+        aria-label="Breadcrumb"
+        className="flex items-center gap-2 text-sm text-textSecondary"
+      >
+        <Link
+          to="/books"
+          className="hover:text-primary transition-colors flex items-center gap-1 font-semibold"
+        >
           <Icon name="arrowLeft" className="h-4 w-4" />
           Katalog Buku
         </Link>
         <span>/</span>
-        <span className="truncate max-w-xs text-textMain font-medium">{book.title}</span>
+        <span className="truncate max-w-xs text-textMain font-medium">
+          {book.title}
+        </span>
       </nav>
 
       {/* Main Detail Card */}
@@ -130,8 +168,13 @@ export default function BookDetailPage() {
                 />
               ) : (
                 <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-primary to-accent">
-                  <Icon name="bookOpen" className="h-16 w-16 text-white/50 mb-3" />
-                  <p className="font-playfair text-white font-bold text-base">{book.title}</p>
+                  <Icon
+                    name="bookOpen"
+                    className="h-16 w-16 text-white/50 mb-3"
+                  />
+                  <p className="font-playfair text-white font-bold text-base">
+                    {book.title}
+                  </p>
                 </div>
               )}
               <span
@@ -141,7 +184,9 @@ export default function BookDetailPage() {
                     : "bg-red-500 text-white"
                 }`}
               >
-                {isAvailable ? `Tersedia (${book.stock} Stok)` : "Dipinjam / Stok Habis"}
+                {isAvailable
+                  ? `Tersedia (${book.stock} Stok)`
+                  : "Dipinjam / Stok Habis"}
               </span>
             </div>
 
@@ -173,50 +218,67 @@ export default function BookDetailPage() {
               </h1>
 
               <p className="mt-2 text-lg text-textSecondary font-crimson">
-                Penulis: <span className="font-semibold text-textMain">{book.author}</span>
+                Penulis:{" "}
+                <span className="font-semibold text-textMain">
+                  {book.author}
+                </span>
               </p>
             </div>
 
             {/* Specs Grid */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               <div className="rounded-xl border border-borderSoft bg-cream/50 p-3.5">
-                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">Penerbit</p>
+                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">
+                  Penerbit
+                </p>
                 <p className="mt-1 font-playfair font-bold text-sm text-textMain truncate">
                   {book.publisher || "Tidak tersedia"}
                 </p>
               </div>
 
               <div className="rounded-xl border border-borderSoft bg-cream/50 p-3.5">
-                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">Tahun Terbit</p>
+                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">
+                  Tahun Terbit
+                </p>
                 <p className="mt-1 font-playfair font-bold text-sm text-textMain">
                   {book.publishedYear || book.year || "Tidak tersedia"}
                 </p>
               </div>
 
               <div className="rounded-xl border border-borderSoft bg-cream/50 p-3.5">
-                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">ISBN</p>
+                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">
+                  ISBN
+                </p>
                 <p className="mt-1 font-playfair font-bold text-sm text-textMain truncate">
                   {book.isbn || "Tidak tersedia"}
                 </p>
               </div>
 
               <div className="rounded-xl border border-borderSoft bg-cream/50 p-3.5">
-                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">Jumlah Halaman</p>
+                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">
+                  Jumlah Halaman
+                </p>
                 <p className="mt-1 font-playfair font-bold text-sm text-textMain">
                   {book.pages ? `${book.pages} halaman` : "Tidak tersedia"}
                 </p>
               </div>
 
               <div className="rounded-xl border border-borderSoft bg-cream/50 p-3.5">
-                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">Stok Buku</p>
+                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">
+                  Stok Buku
+                </p>
                 <p className="mt-1 font-playfair font-bold text-sm text-textMain">
                   {book.stock ?? 0} Eksemplar
                 </p>
               </div>
 
               <div className="rounded-xl border border-borderSoft bg-cream/50 p-3.5">
-                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">Status</p>
-                <p className={`mt-1 font-playfair font-bold text-sm ${isAvailable ? "text-emerald-700" : "text-red-600"}`}>
+                <p className="text-xs text-textSecondary font-semibold uppercase tracking-wider">
+                  Status
+                </p>
+                <p
+                  className={`mt-1 font-playfair font-bold text-sm ${isAvailable ? "text-emerald-700" : "text-red-600"}`}
+                >
                   {isAvailable ? "Tersedia" : "Tidak Tersedia"}
                 </p>
               </div>
@@ -236,9 +298,11 @@ export default function BookDetailPage() {
             <div className="pt-4 border-t border-borderSoft flex flex-wrap items-center justify-between gap-4">
               <button
                 type="button"
-                disabled={!isAvailable || isBorrowing}
+                disabled={!isAvailable || isBorrowing || hasActiveBorrowing}
                 className={`btn-primary py-3 px-8 text-base justify-center flex-1 sm:flex-none ${
-                  !isAvailable || isBorrowing ? "opacity-50 cursor-not-allowed" : ""
+                  !isAvailable || isBorrowing || hasActiveBorrowing
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
                 }`}
                 onClick={async () => {
                   if (!isAuthenticated) {
@@ -246,22 +310,37 @@ export default function BookDetailPage() {
                     navigate("/login");
                     return;
                   }
+                  if (hasActiveBorrowing) {
+                    aksaraToast.error("Anda sudah meminjam buku ini.");
+                    return;
+                  }
                   setIsBorrowing(true);
                   try {
                     await borrowingApi.borrowBook(book.id);
-                    aksaraToast.success(`Buku "${book.title}" berhasil dipinjam!`);
+                    aksaraToast.success(
+                      `Buku "${book.title}" berhasil dipinjam!`,
+                    );
                     // Refresh book data to update stock
                     const refreshed = await bookApi.getBookById(id);
                     setBook(formatBackendBook(refreshed));
+                    setHasActiveBorrowing(true);
                   } catch (err) {
-                    const msg = err?.response?.data?.message || "Gagal meminjam buku.";
+                    const msg =
+                      err?.response?.data?.message || "Gagal meminjam buku.";
                     if (msg.toLowerCase().includes("stok")) {
-                      aksaraToast.error("Stok buku habis. Buku ini sudah dipinjam oleh pengguna lain.");
+                      aksaraToast.error(
+                        "Stok buku habis. Buku ini sudah dipinjam oleh pengguna lain.",
+                      );
                       // Refresh to show updated stock
-                      const refreshed = await bookApi.getBookById(id).catch(() => null);
+                      const refreshed = await bookApi
+                        .getBookById(id)
+                        .catch(() => null);
                       if (refreshed) setBook(formatBackendBook(refreshed));
                     } else {
                       aksaraToast.error(msg);
+                      if (msg.toLowerCase().includes("sudah anda pinjam")) {
+                        setHasActiveBorrowing(true);
+                      }
                     }
                   } finally {
                     setIsBorrowing(false);
@@ -271,10 +350,18 @@ export default function BookDetailPage() {
                 <Icon name="bookOpen" className="h-5 w-5" />
                 {isBorrowing
                   ? "Memproses..."
-                  : isAvailable
-                    ? "Pinjam Buku Ini"
-                    : "Stok Tidak Tersedia"}
+                  : hasActiveBorrowing
+                    ? "Buku sudah Anda pinjam"
+                    : isAvailable
+                      ? "Pinjam Buku Ini"
+                      : "Stok Tidak Tersedia"}
               </button>
+              {hasActiveBorrowing && (
+                <p className="mt-3 text-sm text-amber-700">
+                  Anda sudah meminjam buku ini. Silakan kembalikan buku terlebih
+                  dahulu sebelum meminjam lagi.
+                </p>
+              )}
             </div>
           </div>
         </div>

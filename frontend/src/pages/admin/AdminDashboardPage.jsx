@@ -418,14 +418,7 @@ function WelcomeBanner() {
         </div>
 
         <div className="flex flex-col items-start gap-3 sm:items-end">
-          <span className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-medium text-white/85">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-            </span>
-            Backend API Aktif
-          </span>
-          <span className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-medium text-white/85">
+          <span className="inline-flex items-start gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-medium text-white/85">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
             Mode Administrator
           </span>
@@ -605,7 +598,7 @@ function RecentActivitySection({ activities, onClear }) {
 function PopularBooksSection({ books }) {
   return (
     <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm lg:col-span-2">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+      <div className="flex items-center justify-between border-b  pb-4">
         <div>
           <h2 className="flex items-center gap-2 text-base font-bold text-slate-900">
             <Star className="h-5 w-5 text-amber-500" />

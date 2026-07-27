@@ -165,7 +165,7 @@ export class SeederService implements OnApplicationBootstrap {
       const { categoryName, ...rest } = b;
       return this.bookRepo.create({
         ...rest,
-        category: catMap.get(categoryName) || categories[0],
+        categories: [catMap.get(categoryName) || categories[0]],
       });
     });
 

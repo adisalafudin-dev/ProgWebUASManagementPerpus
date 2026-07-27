@@ -1,16 +1,14 @@
-// src/books/books.service.ts
 import {
   Injectable,
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Book } from './entities/book.entity';
-
+import { Category } from 'src/category/entities/category.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { Category } from 'src/category/entities/category.entity';
 import { FindBooksQueryDto } from './dto/find-books-query.dto';
 
 @Injectable()
@@ -20,12 +18,21 @@ export class BooksService {
     @InjectRepository(Category) private categoryRepo: Repository<Category>,
   ) {}
 
+  private async resolveCategories(categoryIds: string[]) {
+    const categories = await this.categoryRepo.findBy({ id: In(categoryIds) });
+    if (categories.length !== categoryIds.length) {
+      throw new NotFoundException(
+        'Salah satu atau lebih kategori tidak ditemukan',
+      );
+    }
+    return categories;
+  }
+
   async create(dto: CreateBookDto) {
     const existingIsbn = await this.bookRepo.findOneBy({ isbn: dto.isbn });
     if (existingIsbn) throw new ConflictException('ISBN sudah terdaftar');
 
-    const category = await this.categoryRepo.findOneBy({ id: dto.categoryId });
-    if (!category) throw new NotFoundException('Kategori tidak ditemukan');
+    const categories = await this.resolveCategories(dto.categoryIds);
 
     const book = this.bookRepo.create({
       title: dto.title,
@@ -37,33 +44,7 @@ export class BooksService {
       synopsis: dto.synopsis ?? null,
       pages: dto.pages ?? null,
       cover: dto.cover ?? null,
-      category, // objek Category penuh, bukan cuma ID
-    });
-
-    return this.bookRepo.save(book);
-  }
-
-  async update(id: string, dto: UpdateBookDto) {
-    const book = await this.findOne(id);
-
-    if (dto.categoryId) {
-      const category = await this.categoryRepo.findOneBy({
-        id: dto.categoryId,
-      });
-      if (!category) throw new NotFoundException('Kategori tidak ditemukan');
-      book.category = category;
-    }
-
-    Object.assign(book, {
-      title: dto.title ?? book.title,
-      author: dto.author ?? book.author,
-      isbn: dto.isbn ?? book.isbn,
-      stock: dto.stock ?? book.stock,
-      publishedYear: dto.publishedYear ?? book.publishedYear,
-      publisher: dto.publisher ?? book.publisher,
-      synopsis: dto.synopsis ?? book.synopsis,
-      pages: dto.pages ?? book.pages,
-      cover: dto.cover ?? book.cover,
+      categories,
     });
 
     return this.bookRepo.save(book);
@@ -73,9 +54,12 @@ export class BooksService {
     const page = query.page ?? 1;
     const limit = query.limit ?? 10;
 
+    // Step 1: cari ID + hitung total pakai JOIN tanpa SELECT kolom kategori
+    // (leftJoin biasa, BUKAN leftJoinAndSelect) — supaya baris gak duplikat
+    // kalau ada buku dengan 2+ kategori, jadi paginasi tetap akurat.
     const qb = this.bookRepo
       .createQueryBuilder('book')
-      .leftJoinAndSelect('book.category', 'category');
+      .leftJoin('book.categories', 'category');
 
     if (query.search) {
       qb.andWhere(
@@ -92,10 +76,29 @@ export class BooksService {
       .skip((page - 1) * limit)
       .take(limit);
 
-    const [data, total] = await qb.getManyAndCount();
+    const [books, total] = await qb.getManyAndCount();
+
+    // Step 2: baru load relasi categories penuh, KHUSUS untuk buku di halaman
+    // ini saja (bukan semua buku) — supaya response lengkap tanpa merusak
+    // paginasi di step 1.
+    const bookIds = books.map((book) => book.id);
+    const booksWithCategories = bookIds.length
+      ? await this.bookRepo.find({
+          where: { id: In(bookIds) },
+          relations: {
+            categories: true,
+          },
+        })
+      : [];
+
+    // find() tidak menjamin urutan sesuai input, jadi urutkan ulang sesuai
+    // urutan hasil step 1 (yang sudah benar secara paginasi/sorting).
+    const orderedBooks = bookIds
+      .map((id) => booksWithCategories.find((book) => book.id === id))
+      .filter((book): book is Book => Boolean(book));
 
     return {
-      data,
+      data: orderedBooks,
       meta: { total, page, limit, totalPages: Math.ceil(total / limit) || 1 },
     };
   }
@@ -103,10 +106,34 @@ export class BooksService {
   async findOne(id: string) {
     const book = await this.bookRepo.findOne({
       where: { id },
-      relations: { category: true },
+      relations: {
+        categories: true,
+      },
     });
     if (!book) throw new NotFoundException('Buku tidak ditemukan');
     return book;
+  }
+
+  async update(id: string, dto: UpdateBookDto) {
+    const book = await this.findOne(id);
+
+    if (dto.categoryIds) {
+      book.categories = await this.resolveCategories(dto.categoryIds);
+    }
+
+    Object.assign(book, {
+      title: dto.title ?? book.title,
+      author: dto.author ?? book.author,
+      isbn: dto.isbn ?? book.isbn,
+      stock: dto.stock ?? book.stock,
+      publishedYear: dto.publishedYear ?? book.publishedYear,
+      publisher: dto.publisher ?? book.publisher,
+      synopsis: dto.synopsis ?? book.synopsis,
+      pages: dto.pages ?? book.pages,
+      cover: dto.cover ?? book.cover,
+    });
+
+    return this.bookRepo.save(book);
   }
 
   async remove(id: string) {

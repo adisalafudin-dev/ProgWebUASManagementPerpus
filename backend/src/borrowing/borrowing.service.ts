@@ -21,6 +21,18 @@ export class BorrowingsService {
 
   async borrowBook(userId: string, bookId: string) {
     return this.dataSource.transaction(async (manager) => {
+      const activeBorrowing = await manager.findOne(Borrowing, {
+        where: {
+          user: { id: userId },
+          book: { id: bookId },
+          status: BorrowingStatus.DIPINJAM,
+        },
+      });
+
+      if (activeBorrowing) {
+        throw new BadRequestException('Buku sudah Anda pinjam');
+      }
+
       // 1. Ambil buku DENGAN LOCK supaya tidak ada request lain yang baca stok
       //    bersamaan sebelum kita selesai update (mencegah race condition)
       const book = await manager

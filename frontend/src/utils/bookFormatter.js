@@ -69,7 +69,9 @@ export const formatOpenLibraryBook = (book, index) => {
 };
 
 export const formatBackendBook = (book) => {
-  const category = book.category?.name || null;
+  const categoryNames = (book.categories || [])
+    .map((c) => c.name)
+    .filter(Boolean);
 
   return {
     id: book.id,
@@ -82,14 +84,14 @@ export const formatBackendBook = (book) => {
     publisher: book.publisher || null,
     publishers: book.publisher ? [book.publisher] : [],
     isbn: book.isbn || null,
-    subjects: category ? [category] : [],
-    genre: category || "Umum",
-    genres: category ? [category] : [],
+    subjects: categoryNames,
+    genre: categoryNames[0] || "Umum",
+    genres: categoryNames,
     tags: [],
     languages: [],
     allLanguages: [],
     editionCount: 0,
-    rating: 0, // masih 0 — belum diagregasi dari modul review
+    rating: 0,
     available: (book.stock ?? 0) > 0,
     featured: false,
     cover: book.cover || "",

@@ -42,7 +42,12 @@ export const toastError = (message, options = {}) => {
 /**
  * Flexible adapter function for legacy / generic toast calls
  */
-export const showToast = (titleOrMessage, descriptionOrType, typeParam = "info", durationParam) => {
+export const showToast = (
+  titleOrMessage,
+  descriptionOrType,
+  typeParam = "info",
+  durationParam,
+) => {
   let message = titleOrMessage;
   let description = undefined;
   let type = typeParam;
@@ -107,6 +112,12 @@ export const aksaraToast = {
   settingsReset: () => toastInfo("Pengaturan dikembalikan ke default."),
   cacheCleared: () => toastSuccess("Cache lokal berhasil dihapus."),
   cacheClearError: () => toastError("Gagal menghapus cache lokal."),
+
+  // Generic helpers for ad-hoc messages
+  success: (message, options) => toastSuccess(message, options),
+  info: (message, options) => toastInfo(message, options),
+  warning: (message, options) => toastWarning(message, options),
+  error: (message, options) => toastError(message, options),
 };
 
 export default aksaraToast;

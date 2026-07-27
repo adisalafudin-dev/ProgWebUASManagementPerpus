@@ -12,6 +12,7 @@ export default function LoginPage({ redirectTo = "/" }) {
   const location = useLocation();
   const navigate = useNavigate();
   const nextRedirect = location.state?.redirectTo || redirectTo;
+  const showProtectedMessage = location.state?.protected === true;
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -81,6 +82,12 @@ export default function LoginPage({ redirectTo = "/" }) {
   return (
     <div className="w-full max-w-md">
       <div className="rounded-2xl border border-borderSoft bg-white p-7 shadow-book sm:p-9 dark:bg-[#17211f]">
+        {showProtectedMessage && !isAuthenticated && (
+          <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            Silakan login terlebih dahulu untuk mengakses halaman yang Anda
+            tuju.
+          </div>
+        )}
         {isAuthenticated ? (
           <div className="text-center">
             <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-cream shadow-book">
@@ -108,7 +115,11 @@ export default function LoginPage({ redirectTo = "/" }) {
                   Panel Admin
                 </Link>
               )}
-              <button type="button" className="btn-secondary" onClick={handleLogout}>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={handleLogout}
+              >
                 Keluar
               </button>
             </div>
@@ -135,7 +146,10 @@ export default function LoginPage({ redirectTo = "/" }) {
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="login-email" className="section-label mb-1.5 block">
+                <label
+                  htmlFor="login-email"
+                  className="section-label mb-1.5 block"
+                >
                   Email
                 </label>
                 <input
@@ -145,7 +159,9 @@ export default function LoginPage({ redirectTo = "/" }) {
                   className="input-field"
                   placeholder="nama@email.com"
                   value={values.email}
-                  onChange={(event) => handleChange("email", event.target.value)}
+                  onChange={(event) =>
+                    handleChange("email", event.target.value)
+                  }
                 />
               </div>
 
@@ -170,7 +186,9 @@ export default function LoginPage({ redirectTo = "/" }) {
                   className="input-field"
                   placeholder="Masukkan password"
                   value={values.password}
-                  onChange={(event) => handleChange("password", event.target.value)}
+                  onChange={(event) =>
+                    handleChange("password", event.target.value)
+                  }
                 />
               </div>
             </div>
@@ -183,7 +201,11 @@ export default function LoginPage({ redirectTo = "/" }) {
               </div>
             )}
 
-            <button type="submit" className="btn-primary mt-6 w-full" disabled={loading}>
+            <button
+              type="submit"
+              className="btn-primary mt-6 w-full"
+              disabled={loading}
+            >
               <Icon name="users" className="h-4 w-4" />
               {loading ? "Memproses..." : "Masuk"}
             </button>

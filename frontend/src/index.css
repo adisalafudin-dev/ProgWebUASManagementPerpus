@@ -482,7 +482,6 @@ html.dark .admin-shell .hover\:text-indigo-500:hover {
   color: #e7c06b !important;
 }
 
-
 .hero-bg-motion {
   animation: hero-bg-drift 4.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   transform-origin: center;
@@ -626,7 +625,7 @@ html.dark .skeleton-shimmer {
 
 /* Role badge – regular user */
 .profile-role-badge--user {
-  background: rgba(24, 51, 47, 0.10);
+  background: rgba(24, 51, 47, 0.1);
   color: #18332f;
   border: 1px solid rgba(24, 51, 47, 0.22);
 }
@@ -658,7 +657,7 @@ html.dark .skeleton-shimmer {
 
 /* Status badge – inactive */
 .profile-status-badge--inactive {
-  background: rgba(220, 38, 38, 0.10);
+  background: rgba(220, 38, 38, 0.1);
   color: #b91c1c;
   border: 1px solid rgba(220, 38, 38, 0.22);
 }
@@ -702,13 +701,13 @@ html.dark .profile-info-icon {
 html.dark .profile-role-badge--user {
   background: rgba(231, 192, 107, 0.14) !important;
   color: #e7c06b !important;
-  border-color: rgba(231, 192, 107, 0.30) !important;
+  border-color: rgba(231, 192, 107, 0.3) !important;
 }
 
 html.dark .profile-role-badge--admin {
   background: rgba(239, 139, 139, 0.14) !important;
   color: #f7a0a0 !important;
-  border-color: rgba(239, 139, 139, 0.30) !important;
+  border-color: rgba(239, 139, 139, 0.3) !important;
 }
 
 html.dark .profile-status-badge--active {
@@ -725,7 +724,7 @@ html.dark .profile-status-badge--inactive {
 
 html.dark .profile-stat-card {
   background: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(255, 255, 255, 0.10) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 html.dark .profile-stat-icon-wrap {
@@ -853,4 +852,3 @@ html.dark .border-red-100 {
 html.dark .text-red-600 {
   color: #f87171 !important;
 }
-

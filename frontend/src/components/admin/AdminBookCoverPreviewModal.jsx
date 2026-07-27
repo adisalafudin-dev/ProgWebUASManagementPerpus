@@ -59,7 +59,7 @@ export default function AdminBookCoverPreviewModal({
           <div className="flex-1 space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white">
-                {book.category || book.genre || "General"}
+                {book.categories?.[0]?.name || book.category || book.genre || "General"}
               </span>
               <span
                 className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${

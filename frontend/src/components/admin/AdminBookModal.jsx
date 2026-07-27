@@ -15,7 +15,7 @@ export default function AdminBookModal({
     author: "",
     isbn: "",
     stock: "0",
-    categoryId: "",
+    categoryIds: [],
     publishedYear: "",
     publisher: "",
     synopsis: "",
@@ -34,7 +34,7 @@ export default function AdminBookModal({
           author: book.author || "",
           isbn: book.isbn || "",
           stock: String(book.stock ?? 0),
-          categoryId: book.category?.id || "",
+          categoryIds: (book.categories || []).map((c) => c.id),
           publishedYear: book.publishedYear ? String(book.publishedYear) : "",
           publisher: book.publisher || "",
           synopsis: book.synopsis || "",
@@ -65,7 +65,8 @@ export default function AdminBookModal({
     if (!formData.title.trim()) return setErrorMsg("Judul wajib diisi.");
     if (!formData.author.trim()) return setErrorMsg("Penulis wajib diisi.");
     if (!formData.isbn.trim()) return setErrorMsg("ISBN wajib diisi.");
-    if (!formData.categoryId) return setErrorMsg("Kategori wajib dipilih.");
+    if (formData.categoryIds.length === 0)
+      return setErrorMsg("Pilih minimal 1 kategori.");
     if (formData.stock === "" || Number(formData.stock) < 0) {
       return setErrorMsg("Stok tidak valid.");
     }
@@ -76,7 +77,7 @@ export default function AdminBookModal({
       author: formData.author.trim(),
       isbn: formData.isbn.trim(),
       stock: Number(formData.stock),
-      categoryId: formData.categoryId,
+      categoryIds: formData.categoryIds,
       publishedYear: formData.publishedYear
         ? Number(formData.publishedYear)
         : undefined,
@@ -188,7 +189,7 @@ export default function AdminBookModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
               <label className={labelClass}>
                 Kategori <span className="text-red-500">*</span>
@@ -239,6 +240,42 @@ export default function AdminBookModal({
                 placeholder="2008"
                 className={inputClass}
               />
+            </div>
+          </div> */}
+          <div>
+            <label className={labelClass}>
+              Kategori <span className="text-red-500">*</span>
+            </label>
+            <div className="max-h-52 space-y-2 overflow-y-auto rounded-2xl border border-slate-700 bg-slate-950 p-3 shadow-sm">
+              {categories.length === 0 && (
+                <p className="text-xs text-slate-400">
+                  Belum ada kategori. Tambahkan dulu di menu Kategori.
+                </p>
+              )}
+              {categories.map((cat) => {
+                const checked = formData.categoryIds.includes(cat.id);
+                return (
+                  <label
+                    key={cat.id}
+                    className="group flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 transition duration-200 hover:border-slate-500 hover:bg-slate-850 hover:text-white"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          categoryIds: checked
+                            ? prev.categoryIds.filter((id) => id !== cat.id)
+                            : [...prev.categoryIds, cat.id],
+                        }))
+                      }
+                      className="h-4 w-4 rounded border-slate-600 bg-slate-900 text-indigo-500 accent-indigo-500 focus:ring-indigo-500"
+                    />
+                    <span className="grow">{cat.name}</span>
+                  </label>
+                );
+              })}
             </div>
           </div>
 

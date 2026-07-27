@@ -22,7 +22,8 @@ export default function BookCard({
   const coverUrl = book.cover;
   const stock = book.stock ?? (book.available ? 1 : 0);
   const isAvailable = stock > 0;
-  const categoryName = book.category?.name || book.genre || book.category || "Umum";
+  const categoryName =
+    book.categories?.[0]?.name || book.genre || book.category || "Umum";
 
   const gradient = gradients[title.charCodeAt(0) % gradients.length];
 
@@ -58,13 +59,17 @@ export default function BookCard({
         </figcaption>
 
         <span
-          aria-label={isAvailable ? `Tersedia (${stock} stok)` : "Stok habis / sedang dipinjam"}
+          aria-label={
+            isAvailable
+              ? `Tersedia (${stock} stok)`
+              : "Stok habis / sedang dipinjam"
+          }
           className={`absolute top-2 right-2 z-20 text-xs font-semibold font-crimson
                       px-2.5 py-0.5 rounded-full shadow-sm ${
-            isAvailable
-              ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-              : "bg-red-500 text-white border border-red-600"
-          }`}
+                        isAvailable
+                          ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                          : "bg-red-500 text-white border border-red-600"
+                      }`}
         >
           {isAvailable ? `Tersedia (${stock})` : "Dipinjam / Stok Habis"}
         </span>
@@ -133,7 +138,9 @@ export default function BookCard({
           <div
             className="flex items-center gap-1"
             aria-label={
-              rating ? `Rating ${formatRating(rating)}` : "Rating belum tersedia"
+              rating
+                ? `Rating ${formatRating(rating)}`
+                : "Rating belum tersedia"
             }
           >
             {[1, 2, 3, 4, 5].map((star) => (

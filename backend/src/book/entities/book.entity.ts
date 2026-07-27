@@ -5,9 +5,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   OneToMany,
-  JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity('books')
@@ -39,14 +39,16 @@ export class Book {
   @Column({ type: 'int', nullable: true })
   pages: number | null;
 
-  @Column({ type: 'varchar',length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   cover: string | null; // URL gambar sampul, admin paste link
 
-  @ManyToOne(() => Category, (category) => category.books, {
-    onDelete: 'SET NULL',
+  @ManyToMany(() => Category, (category) => category.books)
+  @JoinTable({
+    name: 'book_categories',
+    joinColumn: { name: 'book_id' },
+    inverseJoinColumn: { name: 'category_id' },
   })
-  @JoinColumn({ name: 'category_id' })
-  category: Category;
+  categories: Category[];
 
   @OneToMany(() => Borrowing, (borrowing) => borrowing.book)
   borrowings: Borrowing[];
