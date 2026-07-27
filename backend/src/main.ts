@@ -1,6 +1,7 @@
 // src/main.ts
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -17,6 +18,15 @@ async function bootstrap() {
   );
 
   app.enableCors(); // supaya frontend (domain beda) bisa akses API ini
+
+  const config = new DocumentBuilder()
+    .setTitle('AksaraHub API')
+    .setDescription('The AksaraHub Library System API description')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env.PORT || 3000;
   await app.listen(port);

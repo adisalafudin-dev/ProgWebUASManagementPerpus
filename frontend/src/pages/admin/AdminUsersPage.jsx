@@ -112,8 +112,13 @@ export default function AdminUsersPage() {
         await memberApi.patchMember(id, payload);
         aksaraToast.show?.("Data anggota berhasil diperbarui", "success");
       } else {
-        await memberApi.createMember(payload);
+        const res = await memberApi.createMember(payload);
         aksaraToast.show?.("Anggota baru berhasil ditambahkan", "success");
+        if (res && res.loginAccountCreated) {
+          window.alert(
+            `PENTING:\n\nAkun login untuk anggota ini telah otomatis dibuat.\nEmail: ${res.email || payload.email}\nPassword Default: ${res.defaultPassword || "password"}\n\nBeritahu anggota untuk segera mengganti password setelah login.`
+          );
+        }
       }
       setIsMemberModalOpen(false);
       setEditingMember(null);
