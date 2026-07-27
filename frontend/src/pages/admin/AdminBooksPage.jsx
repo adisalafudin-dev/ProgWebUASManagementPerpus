@@ -280,7 +280,7 @@ export default function AdminBooksPage() {
                 {books.map((book) => (
                   <tr
                     key={book.id}
-                    className="transition-colors hover:bg-slate-50/80"
+                    className="transition-colors hover:bg-slate-100"
                   >
                     <td className="px-5 py-3">
                       <div className="h-14 w-10 overflow-hidden rounded-md border border-slate-200 bg-slate-100">

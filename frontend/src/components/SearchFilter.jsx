@@ -25,11 +25,11 @@ export default function SearchFilter({
 
   const [values, setValues] = useState(defaults);
   const [filterMessage, setFilterMessage] = useState("");
-  
+
   // Debounce search queries for better performance
   const debouncedQuery = useDebounce(values.q, 300);
   const debouncedAuthor = useDebounce(values.author, 300);
-  
+
   const set = (key, val) => {
     const nextValues = { ...values, [key]: val };
     setValues(nextValues);
@@ -57,7 +57,11 @@ export default function SearchFilter({
   // Auto-apply filter when debounced search values change
   useEffect(() => {
     if (debouncedQuery !== values.q || debouncedAuthor !== values.author) {
-      const nextValues = { ...values, q: debouncedQuery, author: debouncedAuthor };
+      const nextValues = {
+        ...values,
+        q: debouncedQuery,
+        author: debouncedAuthor,
+      };
       setValues(nextValues);
       onChange?.(isDefaultValues(nextValues) ? null : nextValues);
     }

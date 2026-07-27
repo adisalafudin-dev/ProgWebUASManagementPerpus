@@ -36,7 +36,9 @@ export default function ExplorePage() {
       setCategories(Array.isArray(catsRes) ? catsRes : []);
     } catch (err) {
       console.error("Gagal memuat data explore:", err);
-      setError(err?.message || "Server backend belum siap atau tidak merespons.");
+      setError(
+        err?.message || "Server backend belum siap atau tidak merespons.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +56,10 @@ export default function ExplorePage() {
   // Newest books (sorted by publishedYear desc)
   const newestBooks = useMemo(() => {
     return [...books]
-      .sort((a, b) => (Number(b.publishedYear) || 0) - (Number(a.publishedYear) || 0))
+      .sort(
+        (a, b) =>
+          (Number(b.publishedYear) || 0) - (Number(a.publishedYear) || 0),
+      )
       .slice(0, 4);
   }, [books]);
 
@@ -92,14 +97,15 @@ export default function ExplorePage() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center bg-cream px-4 py-12">
         <div className="max-w-md w-full rounded-2xl border border-red-200 bg-white p-8 text-center shadow-book">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 text-red-600">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 ">
             <Icon name="info" className="h-7 w-7" />
           </div>
           <h2 className="font-playfair text-2xl font-bold text-textMain mb-2">
             Gagal Memuat Katalog Buku
           </h2>
           <p className="font-crimson text-textSecondary mb-6 leading-relaxed">
-            {error || "Server API tidak merespons. Silakan periksa koneksi Anda dan coba lagi."}
+            {error ||
+              "Server API tidak merespons. Silakan periksa koneksi Anda dan coba lagi."}
           </p>
           <button
             type="button"
@@ -139,15 +145,21 @@ export default function ExplorePage() {
               </div>
 
               <h1 className="mb-4 font-playfair text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
-                {heroBook ? heroBook.title : "Katalog & Koleksi Digital Perpustakaan"}
+                {heroBook
+                  ? heroBook.title
+                  : "Katalog & Koleksi Digital Perpustakaan"}
               </h1>
 
               <p className="mb-6 max-w-xl text-base text-white/80 leading-relaxed sm:text-lg">
                 {heroBook ? (
                   <>
                     Ditulis oleh{" "}
-                    <span className="font-semibold text-accent">{heroBook.author}</span>
-                    {heroBook.publishedYear && ` (${heroBook.publishedYear})`} - Akses koleksi buku dan literatur ilmiah terpadu secara real-time.
+                    <span className="font-semibold text-accent">
+                      {heroBook.author}
+                    </span>
+                    {heroBook.publishedYear && ` (${heroBook.publishedYear})`} -
+                    Akses koleksi buku dan literatur ilmiah terpadu secara
+                    real-time.
                   </>
                 ) : (
                   "Temukan referensi buku ilmiah, sastra, dan pengetahuan umum secara terpadu dari database kami."
@@ -159,7 +171,10 @@ export default function ExplorePage() {
                   <Icon name="compass" className="h-5 w-5" />
                   Jelajahi Katalog
                 </Link>
-                <Link to="/favorites" className="btn-secondary text-primary py-3 px-6 text-base">
+                <Link
+                  to="/favorites"
+                  className="btn-secondary text-primary py-3 px-6 text-base"
+                >
                   <Icon name="heart" className="h-5 w-5" />
                   Rak Favorit
                 </Link>
@@ -198,8 +213,13 @@ export default function ExplorePage() {
                       />
                     ) : (
                       <div className="flex h-full w-full flex-col justify-center p-6 text-center">
-                        <Icon name="bookOpen" className="mx-auto mb-3 h-10 w-10 text-accent" />
-                        <p className="font-playfair font-bold text-white text-sm">{heroBook.title}</p>
+                        <Icon
+                          name="bookOpen"
+                          className="mx-auto mb-3 h-10 w-10 text-accent"
+                        />
+                        <p className="font-playfair font-bold text-white text-sm">
+                          {heroBook.title}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -221,7 +241,8 @@ export default function ExplorePage() {
             Cari Buku di Katalog Perpustakaan
           </h2>
           <p className="text-sm text-textSecondary mt-1">
-            Gunakan filter kata kunci atau kategori untuk menemukan koleksi buku yang Anda inginkan.
+            Gunakan filter kata kunci atau kategori untuk menemukan koleksi buku
+            yang Anda inginkan.
           </p>
         </div>
 
@@ -229,11 +250,17 @@ export default function ExplorePage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Input Judul / Kata Kunci */}
             <div>
-              <label htmlFor="search-title" className="section-label mb-1.5 block text-xs">
+              <label
+                htmlFor="search-title"
+                className="section-label mb-1.5 block text-xs"
+              >
                 Judul / Penulis / ISBN
               </label>
               <div className="relative">
-                <Icon name="search" className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-textSecondary" />
+                <Icon
+                  name="search"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-textSecondary"
+                />
                 <input
                   id="search-title"
                   type="text"
@@ -247,11 +274,17 @@ export default function ExplorePage() {
 
             {/* Select Subjek / Kategori */}
             <div>
-              <label htmlFor="search-category" className="section-label mb-1.5 block text-xs">
+              <label
+                htmlFor="search-category"
+                className="section-label mb-1.5 block text-xs"
+              >
                 Kategori Buku
               </label>
               <div className="relative">
-                <Icon name="tag" className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-textSecondary pointer-events-none" />
+                <Icon
+                  name="tag"
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-textSecondary pointer-events-none"
+                />
                 <select
                   id="search-category"
                   value={selectedCategoryId}
@@ -265,7 +298,10 @@ export default function ExplorePage() {
                     </option>
                   ))}
                 </select>
-                <Icon name="chevronDown" className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-textSecondary pointer-events-none" />
+                <Icon
+                  name="chevronDown"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-textSecondary pointer-events-none"
+                />
               </div>
             </div>
           </div>
@@ -349,11 +385,17 @@ export default function ExplorePage() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="section-label mb-1">Rilisan Terbaru</p>
-            <h2 id="heading-buku-terbaru" className="font-playfair text-2xl font-bold text-textMain sm:text-3xl">
+            <h2
+              id="heading-buku-terbaru"
+              className="font-playfair text-2xl font-bold text-textMain sm:text-3xl"
+            >
               Koleksi Buku Terbaru
             </h2>
           </div>
-          <Link to="/books" className="flex items-center gap-1.5 text-sm font-semibold text-accentHover hover:underline">
+          <Link
+            to="/books"
+            className="flex items-center gap-1.5 text-sm font-semibold text-accentHover hover:underline"
+          >
             <span>Lihat Semua</span>
             <Icon name="chevronRight" className="h-4 w-4" />
           </Link>
@@ -378,7 +420,10 @@ export default function ExplorePage() {
             ))}
           </div>
         ) : (
-          <EmptyState icon="collection" text="Tidak ada data buku terbaru yang ditemukan." />
+          <EmptyState
+            icon="collection"
+            text="Tidak ada data buku terbaru yang ditemukan."
+          />
         )}
       </section>
 
@@ -387,11 +432,17 @@ export default function ExplorePage() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="section-label mb-1">Rekomendasi Pustaka</p>
-            <h2 id="heading-rekomendasi" className="font-playfair text-2xl font-bold text-textMain sm:text-3xl">
+            <h2
+              id="heading-rekomendasi"
+              className="font-playfair text-2xl font-bold text-textMain sm:text-3xl"
+            >
               Rekomendasi Pilihan
             </h2>
           </div>
-          <Link to="/books" className="flex items-center gap-1.5 text-sm font-semibold text-accentHover hover:underline">
+          <Link
+            to="/books"
+            className="flex items-center gap-1.5 text-sm font-semibold text-accentHover hover:underline"
+          >
             <span>Lihat Selengkapnya</span>
             <Icon name="chevronRight" className="h-4 w-4" />
           </Link>
@@ -425,7 +476,10 @@ export default function ExplorePage() {
         <section aria-labelledby="heading-kategori-populer">
           <div className="mb-6">
             <p className="section-label mb-1">Kategori Buku</p>
-            <h2 id="heading-kategori-populer" className="font-playfair text-2xl font-bold text-textMain sm:text-3xl">
+            <h2
+              id="heading-kategori-populer"
+              className="font-playfair text-2xl font-bold text-textMain sm:text-3xl"
+            >
               Eksplorasi Kategori
             </h2>
           </div>
