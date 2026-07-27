@@ -1,0 +1,856 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-crimson antialiased;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(246, 241, 232, 0.96),
+        rgba(239, 231, 218, 0.96)
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(28, 27, 25, 0.025) 0 1px,
+        transparent 1px 72px
+      );
+    color: #1c1b19;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-playfair;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           text-white font-semibold font-crimson
+           px-5 py-2.5 rounded-lg cursor-pointer
+           transition-all duration-300 ease-out
+           hover:-translate-y-0.5
+           active:translate-y-0 active:shadow-none
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+    background-color: #b8892d;
+    --tw-ring-color: #b8892d;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           border bg-white font-semibold font-crimson
+           px-5 py-2.5 rounded-lg cursor-pointer
+           transition-all duration-300 ease-out
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+    border-color: #d8cfc0;
+    color: #18332f;
+    --tw-ring-color: #b8892d;
+  }
+
+  .input-field {
+    @apply w-full bg-white border font-crimson
+           px-4 py-2.5 rounded-lg outline-none
+           transition-all duration-200
+           focus:ring-4;
+    border-color: #d8cfc0;
+    color: #1c1b19;
+    --tw-ring-color: rgb(184 137 45 / 0.22);
+  }
+
+  .select-field {
+    @apply w-full bg-white border font-crimson
+           px-4 py-2.5 rounded-lg outline-none cursor-pointer appearance-none
+           transition-all duration-200
+           focus:ring-4;
+    border-color: #d8cfc0;
+    color: #1c1b19;
+    --tw-ring-color: rgb(184 137 45 / 0.22);
+  }
+
+  .book-card {
+    @apply bg-white rounded-lg overflow-hidden border
+           cursor-pointer
+           transition-all duration-500 ease-out
+           hover:-translate-y-1;
+    border-color: #d8cfc0;
+    background-color: #fffdf8;
+    box-shadow:
+      0 2px 10px -2px rgba(28, 27, 25, 0.14),
+      0 1px 4px -1px rgba(28, 27, 25, 0.08);
+  }
+
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    align-items: stretch;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .book-grid {
+      gap: 1.5rem;
+    }
+  }
+
+  .section-label {
+    @apply text-xs font-semibold font-crimson tracking-[0.14em] uppercase;
+    color: #7a2e2e;
+  }
+}
+
+.btn-primary:hover {
+  background-color: #7a2e2e;
+  box-shadow:
+    0 18px 34px -8px rgba(28, 27, 25, 0.24),
+    0 8px 14px -5px rgba(28, 27, 25, 0.14);
+}
+
+.btn-secondary:hover {
+  background-color: #f6f1e8;
+  border-color: #b8892d;
+  color: #7a2e2e;
+}
+
+.input-field:focus,
+.select-field:focus {
+  border-color: #b8892d;
+}
+
+.input-field::placeholder {
+  color: #6f6a61;
+}
+
+.book-card:hover {
+  border-color: #b8892d;
+  box-shadow:
+    0 18px 34px -8px rgba(28, 27, 25, 0.24),
+    0 8px 14px -5px rgba(28, 27, 25, 0.14);
+}
+
+.book-card img {
+  will-change: transform;
+}
+
+.toast-enter {
+  animation: toast-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+html.dark body {
+  background:
+    linear-gradient(180deg, rgba(15, 24, 22, 0.98), rgba(23, 30, 27, 0.98)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 0 1px,
+      transparent 1px 72px
+    );
+  color: #f5efe4;
+}
+
+html.dark .bg-cream,
+html.dark .bg-parchment-50 {
+  background-color: #111a18 !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-white\/80 {
+  background-color: #17211f !important;
+}
+
+html.dark .bg-primary {
+  background-color: #0c1513 !important;
+}
+
+html.dark .bg-secondary {
+  background-color: #24342f !important;
+}
+
+html.dark .text-textMain,
+html.dark .text-ink,
+html.dark .text-primary {
+  color: #f5efe4 !important;
+}
+
+html.dark .text-textSecondary,
+html.dark .text-slate-400,
+html.dark .text-slate-500,
+html.dark .text-secondary {
+  color: #c8bdaa !important;
+}
+
+html.dark .border-borderSoft,
+html.dark .border-red-100 {
+  border-color: #33423c !important;
+}
+
+html.dark .book-card {
+  background-color: #17211f;
+  border-color: #33423c;
+  box-shadow:
+    0 2px 10px -2px rgba(0, 0, 0, 0.35),
+    0 1px 4px -1px rgba(0, 0, 0, 0.24);
+}
+
+html.dark .book-card:hover {
+  border-color: #b8892d;
+  box-shadow:
+    0 18px 34px -8px rgba(0, 0, 0, 0.48),
+    0 8px 14px -5px rgba(0, 0, 0, 0.32);
+}
+
+html.dark .btn-secondary {
+  background-color: #17211f;
+  border-color: #33423c;
+  color: #f5efe4;
+}
+
+html.dark .btn-secondary:hover {
+  background-color: #202e2a;
+  border-color: #b8892d;
+  color: #e7c06b;
+}
+
+html.dark .input-field,
+html.dark .select-field,
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #17211f;
+  border-color: #33423c;
+  color: #f5efe4;
+}
+
+html.dark .input-field::placeholder,
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #9c9385;
+}
+
+html.dark .section-label {
+  color: #e7c06b;
+}
+
+html.dark .shadow-book {
+  box-shadow:
+    0 2px 10px -2px rgba(0, 0, 0, 0.35),
+    0 1px 4px -1px rgba(0, 0, 0, 0.24);
+}
+
+html.dark .bg-borderSoft\/70,
+html.dark .bg-borderSoft\/80,
+html.dark .bg-borderSoft {
+  background-color: #33423c !important;
+}
+
+html.dark .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .bg-white\/50,
+html.dark .bg-white\/60 {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.nav-link-active {
+  background-color: #f8f6f0 !important;
+  color: #18332f !important;
+}
+
+.nav-link-active svg {
+  color: #18332f !important;
+}
+
+html.dark .nav-link-active {
+  background-color: #f8f6f0 !important;
+  color: #18332f !important;
+}
+
+html.dark .nav-link-active svg,
+html.dark .nav-link-active .text-primary {
+  color: #18332f !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f6f1e8;
+}
+::-webkit-scrollbar-thumb {
+  background: #b8892d;
+  border-radius: 3px;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-playfair {
+  font-family: "Poppins", "Inter", system-ui, sans-serif !important;
+}
+
+.font-crimson {
+  font-family: "Inter", system-ui, sans-serif !important;
+}
+
+/* Menyamakan tampilan admin dengan identitas visual halaman user. */
+.admin-shell .bg-slate-50,
+.admin-shell .bg-slate-50\/60,
+.admin-shell .bg-slate-50\/80 {
+  background-color: #fffdf8 !important;
+}
+
+.admin-shell .bg-slate-100,
+.admin-shell .bg-slate-100\/60 {
+  background-color: #f6f1e8 !important;
+}
+
+.admin-shell .bg-slate-200 {
+  background-color: #d8cfc0 !important;
+}
+
+.admin-shell .bg-slate-800,
+.admin-shell .bg-slate-900 {
+  background-color: #18332f !important;
+}
+
+.admin-shell .border-slate-100,
+.admin-shell .border-slate-200 {
+  border-color: #d8cfc0 !important;
+}
+
+.admin-shell .text-slate-900,
+.admin-shell .text-slate-800,
+.admin-shell .text-slate-700 {
+  color: #1c1b19 !important;
+}
+
+.admin-shell .text-slate-600,
+.admin-shell .text-slate-500,
+.admin-shell .text-slate-400 {
+  color: #6f6a61 !important;
+}
+
+.admin-shell .bg-indigo-50,
+.admin-shell .bg-violet-50 {
+  background-color: #f6f1e8 !important;
+}
+
+.admin-shell .bg-indigo-100,
+.admin-shell .bg-violet-100 {
+  background-color: #efe7da !important;
+}
+
+.admin-shell .bg-indigo-500,
+.admin-shell .bg-violet-500 {
+  background-color: #b8892d !important;
+}
+
+.admin-shell .border-indigo-100,
+.admin-shell .border-indigo-200,
+.admin-shell .border-indigo-300,
+.admin-shell .border-violet-100,
+.admin-shell .border-violet-200 {
+  border-color: #d8cfc0 !important;
+}
+
+.admin-shell .border-indigo-500 {
+  border-color: #b8892d !important;
+}
+
+.admin-shell .text-indigo-900,
+.admin-shell .text-indigo-700,
+.admin-shell .text-violet-700 {
+  color: #18332f !important;
+}
+
+.admin-shell .text-indigo-600,
+.admin-shell .text-violet-600 {
+  color: #7a2e2e !important;
+}
+
+.admin-shell .hover\:bg-slate-50:hover,
+.admin-shell .hover\:bg-indigo-50:hover,
+.admin-shell .hover\:bg-violet-50:hover {
+  background-color: #f6f1e8 !important;
+}
+
+.admin-shell .hover\:bg-slate-100:hover {
+  background-color: #efe7da !important;
+}
+
+.admin-shell .hover\:border-indigo-300:hover {
+  border-color: #b8892d !important;
+}
+
+.admin-shell .hover\:text-indigo-700:hover,
+.admin-shell .hover\:text-indigo-500:hover {
+  color: #7a2e2e !important;
+}
+
+/* ─── Dark Mode Overrides for Admin Shell ─── */
+html.dark .admin-shell .bg-slate-50,
+html.dark .admin-shell .bg-slate-50\/60,
+html.dark .admin-shell .bg-slate-50\/80 {
+  background-color: #111a18 !important;
+}
+
+html.dark .admin-shell .bg-slate-100,
+html.dark .admin-shell .bg-slate-100\/60 {
+  background-color: #1a2724 !important;
+}
+
+html.dark .admin-shell .bg-slate-200 {
+  background-color: #33423c !important;
+}
+
+html.dark .admin-shell .border-slate-100,
+html.dark .admin-shell .border-slate-200 {
+  border-color: #33423c !important;
+}
+
+html.dark .admin-shell .text-slate-900,
+html.dark .admin-shell .text-slate-800,
+html.dark .admin-shell .text-slate-700 {
+  color: #f5efe4 !important;
+}
+
+html.dark .admin-shell .text-slate-600,
+html.dark .admin-shell .text-slate-500,
+html.dark .admin-shell .text-slate-400 {
+  color: #c8bdaa !important;
+}
+
+html.dark .admin-shell .bg-indigo-50,
+html.dark .admin-shell .bg-violet-50 {
+  background-color: #1a2724 !important;
+}
+
+html.dark .admin-shell .bg-indigo-100,
+html.dark .admin-shell .bg-violet-100 {
+  background-color: #24342f !important;
+}
+
+html.dark .admin-shell .text-indigo-900,
+html.dark .admin-shell .text-indigo-700,
+html.dark .admin-shell .text-violet-700 {
+  color: #f5efe4 !important;
+}
+
+html.dark .admin-shell .text-indigo-600,
+html.dark .admin-shell .text-violet-600 {
+  color: #e7c06b !important;
+}
+
+html.dark .admin-shell .hover\:bg-slate-50:hover,
+html.dark .admin-shell .hover\:bg-indigo-50:hover,
+html.dark .admin-shell .hover\:bg-violet-50:hover {
+  background-color: #1a2724 !important;
+}
+
+html.dark .admin-shell .hover\:bg-slate-100:hover {
+  background-color: #24342f !important;
+}
+
+html.dark .admin-shell .hover\:text-indigo-700:hover,
+html.dark .admin-shell .hover\:text-indigo-500:hover {
+  color: #e7c06b !important;
+}
+
+
+.hero-bg-motion {
+  animation: hero-bg-drift 4.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.hero-bg-clear {
+  animation: hero-bg-clear-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.hero-copy-motion {
+  animation: hero-copy-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+.hero-cover-motion {
+  animation: hero-cover-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
+@keyframes hero-bg-drift {
+  from {
+    opacity: 0;
+    transform: scale(1.14);
+  }
+  to {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes hero-bg-clear-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+}
+
+@keyframes hero-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes hero-cover-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(216, 207, 192, 0.4) 0%,
+    rgba(216, 207, 192, 0.8) 50%,
+    rgba(216, 207, 192, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+html.dark .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(51, 66, 60, 0.4) 0%,
+    rgba(51, 66, 60, 0.8) 50%,
+    rgba(51, 66, 60, 0.4) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ─── Profile Page Components ──────────────────────────────────── */
+
+/* Accent icon (golden) */
+.profile-accent-icon {
+  color: #b8892d;
+}
+
+/* Info row icon */
+.profile-info-icon {
+  color: #b8892d;
+}
+
+/* Role badge – shared */
+.profile-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Role badge – regular user */
+.profile-role-badge--user {
+  background: rgba(24, 51, 47, 0.10);
+  color: #18332f;
+  border: 1px solid rgba(24, 51, 47, 0.22);
+}
+
+/* Role badge – admin */
+.profile-role-badge--admin {
+  background: rgba(122, 46, 46, 0.12);
+  color: #7a2e2e;
+  border: 1px solid rgba(122, 46, 46, 0.26);
+}
+
+/* Status badge – shared */
+.profile-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Status badge – active */
+.profile-status-badge--active {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+  border: 1px solid rgba(22, 163, 74, 0.24);
+}
+
+/* Status badge – inactive */
+.profile-status-badge--inactive {
+  background: rgba(220, 38, 38, 0.10);
+  color: #b91c1c;
+  border: 1px solid rgba(220, 38, 38, 0.22);
+}
+
+/* Stat card */
+.profile-stat-card {
+  background: rgba(246, 241, 232, 0.7);
+  border: 1px solid rgba(216, 207, 192, 0.6);
+}
+
+/* Stat card – icon wrapper */
+.profile-stat-icon-wrap {
+  background: rgba(184, 137, 45, 0.12);
+}
+
+/* Stat card – label text */
+.profile-stat-label {
+  color: #6f6a61;
+}
+
+/* Coming Soon button */
+.profile-coming-soon-btn {
+  border-color: #d8cfc0;
+  color: #6f6a61;
+  background: transparent;
+}
+
+/* Coming Soon badge chip */
+.profile-coming-soon-badge {
+  background: rgba(184, 137, 45, 0.15);
+  color: #b8892d;
+}
+
+/* ─── Dark mode overrides for Profile Page ─────────────────────── */
+
+html.dark .profile-accent-icon,
+html.dark .profile-info-icon {
+  color: #e7c06b !important;
+}
+
+html.dark .profile-role-badge--user {
+  background: rgba(231, 192, 107, 0.14) !important;
+  color: #e7c06b !important;
+  border-color: rgba(231, 192, 107, 0.30) !important;
+}
+
+html.dark .profile-role-badge--admin {
+  background: rgba(239, 139, 139, 0.14) !important;
+  color: #f7a0a0 !important;
+  border-color: rgba(239, 139, 139, 0.30) !important;
+}
+
+html.dark .profile-status-badge--active {
+  background: rgba(74, 222, 128, 0.14) !important;
+  color: #4ade80 !important;
+  border-color: rgba(74, 222, 128, 0.28) !important;
+}
+
+html.dark .profile-status-badge--inactive {
+  background: rgba(248, 113, 113, 0.14) !important;
+  color: #f87171 !important;
+  border-color: rgba(248, 113, 113, 0.28) !important;
+}
+
+html.dark .profile-stat-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+html.dark .profile-stat-icon-wrap {
+  background: rgba(231, 192, 107, 0.16) !important;
+}
+
+html.dark .profile-stat-label {
+  color: #c8bdaa !important;
+}
+
+html.dark .profile-coming-soon-btn {
+  border-color: #33423c !important;
+  color: #c8bdaa !important;
+}
+
+html.dark .profile-coming-soon-badge {
+  background: rgba(231, 192, 107, 0.18) !important;
+  color: #e7c06b !important;
+}
+
+/* ─── Dark Mode — Navbar Shell ───────────────────────────────────── */
+
+html.dark .navbar-shell {
+  background-color: #111a18 !important;
+  border-color: #33423c !important;
+}
+
+/* Search input inside navbar */
+html.dark .navbar-search-input {
+  background-color: #1a2724 !important;
+  border-color: #33423c !important;
+  color: #f5efe4 !important;
+}
+
+html.dark .navbar-search-input::placeholder {
+  color: #9c9385 !important;
+}
+
+/* Ctrl+K kbd badge */
+html.dark .navbar-kbd {
+  background-color: #1a2724 !important;
+  border-color: #33423c !important;
+  color: #9c9385 !important;
+}
+
+/* Round icon buttons: dark mode toggle, bell, mobile search */
+html.dark .navbar-icon-btn {
+  background-color: #1a2724 !important;
+  border-color: #33423c !important;
+  color: #c8bdaa !important;
+}
+
+html.dark .navbar-icon-btn:hover {
+  border-color: #b8892d !important;
+  color: #e7c06b !important;
+}
+
+/* User avatar button */
+html.dark .navbar-user-btn {
+  background-color: #1a2724 !important;
+  border-color: #33423c !important;
+  color: #f5efe4 !important;
+}
+
+html.dark .navbar-user-btn:hover {
+  border-color: #b8892d !important;
+}
+
+/* Dropdown panels (user menu, autocomplete, mobile search modal) */
+html.dark .navbar-dropdown {
+  background-color: #17211f !important;
+  border-color: #33423c !important;
+}
+
+/* Dropdown header label row */
+html.dark .navbar-dropdown-header {
+  background-color: #111a18 !important;
+  color: #9c9385 !important;
+}
+
+/* Dropdown suggestion item hover */
+html.dark .navbar-suggestion-item:hover {
+  background-color: #1a2724 !important;
+}
+
+/* Menu link items (Profil, Pengaturan, Tentang, Keluar) */
+html.dark .navbar-menu-item:hover {
+  background-color: #1a2724 !important;
+}
+
+/* Breadcrumb strip */
+html.dark .navbar-breadcrumb {
+  background-color: #0f1715 !important;
+  border-color: #33423c !important;
+}
+
+/* ── Settings page: confirm dialog fade-in + scale ── */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Settings page: dark mode for "Hapus Cache" danger button */
+html.dark .bg-red-50 {
+  background-color: rgba(127, 29, 29, 0.18) !important;
+}
+html.dark .border-red-200 {
+  border-color: rgba(185, 28, 28, 0.3) !important;
+}
+html.dark .text-red-700 {
+  color: #fca5a5 !important;
+}
+html.dark .hover\:bg-red-100:hover {
+  background-color: rgba(127, 29, 29, 0.28) !important;
+}
+html.dark .border-red-100 {
+  border-color: rgba(185, 28, 28, 0.25) !important;
+}
+html.dark .text-red-600 {
+  color: #f87171 !important;
+}
+

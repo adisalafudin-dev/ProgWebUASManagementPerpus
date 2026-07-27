@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  # Konfigurasi MySQL
+  mysql_db:
+    image: mysql:8.0
+    container_name: nest_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: management_perpus
+      MYSQL_USER: nest_user
+      MYSQL_PASSWORD: nest_password
+    ports:
+      - "3306:3306" # Mengekspos port 3306 ke localhost komputer kamu
+    volumes:
+      - mysql_data:/var/lib/mysql # Menyimpan data agar tidak hilang saat container mati
+
+  # Konfigurasi phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: nest_phpmyadmin
+    restart: always
+    depends_on:
+      - mysql_db
+    environment:
+      PMA_HOST: mysql_db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80" # Akses phpMyAdmin melalui http://  localhost:8080
+
+volumes:
+  mysql_data:
