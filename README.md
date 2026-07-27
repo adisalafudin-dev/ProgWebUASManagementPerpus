@@ -44,6 +44,12 @@
 
 Aplikasi dibangun dengan pendekatan **arsitektur terpisah (decoupled architecture)**, di mana **backend** berperan sebagai *RESTful API* yang menangani seluruh logika bisnis dan akses basis data, sedangkan **frontend** berperan sebagai antarmuka pengguna (*user interface*) yang mengonsumsi API tersebut.
 
+## 📝 Deskripsi Proyek
+
+1. Andra
+2. Adi
+3. Virgo
+
 
 ## 🎯 Tujuan Aplikasi
 
