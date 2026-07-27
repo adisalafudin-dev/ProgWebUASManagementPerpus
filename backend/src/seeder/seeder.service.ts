@@ -91,7 +91,8 @@ export class SeederService implements OnApplicationBootstrap {
         synopsis:
           'Kisah inspiratif anak-anak Belitong yang berjuang mengejar pendidikan di tengah keterbatasan.',
         pages: 529,
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/51yjvTWs4bL.jpg',
+        cover:
+          'https://images-na.ssl-images-amazon.com/images/I/51yjvTWs4bL.jpg',
         categoryName: 'Fiksi',
       },
       {
@@ -104,7 +105,8 @@ export class SeederService implements OnApplicationBootstrap {
         synopsis:
           'Sebuah penelusuran sejarah manusia dari Zaman Batu sampai era Silicon.',
         pages: 443,
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/41yu2qXhXXL.jpg',
+        cover:
+          'https://images-na.ssl-images-amazon.com/images/I/41yu2qXhXXL.jpg',
         categoryName: 'Sejarah',
       },
       {
@@ -117,7 +119,8 @@ export class SeederService implements OnApplicationBootstrap {
         synopsis:
           'Penjelasan populer tentang kosmologi, lubang hitam, dan asal-usul alam semesta.',
         pages: 256,
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/51+GySc8ExL.jpg',
+        cover:
+          'https://images-na.ssl-images-amazon.com/images/I/51+GySc8ExL.jpg',
         categoryName: 'Sains',
       },
       {
@@ -130,7 +133,8 @@ export class SeederService implements OnApplicationBootstrap {
         synopsis:
           'Panduan menulis kode yang bersih, mudah dibaca, dan mudah dipelihara.',
         pages: 464,
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL.jpg',
+        cover:
+          'https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL.jpg',
         categoryName: 'Teknologi',
       },
       {
@@ -143,7 +147,8 @@ export class SeederService implements OnApplicationBootstrap {
         synopsis:
           'Novel pertama dari Tetralogi Buru yang mengangkat kisah di era kolonial Hindia Belanda.',
         pages: 535,
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/51xDuWljS0L.jpg',
+        cover:
+          'https://images-na.ssl-images-amazon.com/images/I/51xDuWljS0L.jpg',
         categoryName: 'Sastra',
       },
       {
@@ -156,7 +161,8 @@ export class SeederService implements OnApplicationBootstrap {
         synopsis:
           'Cara membangun kebiasaan baik dan menghilangkan kebiasaan buruk melalui perubahan kecil yang konsisten.',
         pages: 320,
-        cover: 'https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL.jpg',
+        cover:
+          'https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL.jpg',
         categoryName: 'Non-Fiksi',
       },
     ];
