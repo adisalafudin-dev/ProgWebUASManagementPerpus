@@ -1,406 +1,277 @@
-# 📚 Sistem Manajemen Perpustakaan (Library Management System)
+# 📚 AksaraHub — Sistem Informasi Perpustakaan Digital
 
-> **Proyek Ujian Akhir Semester (UAS)**
-> Mata Kuliah: Pemrograman Web
-> Program Studi S1 Informatika — Universitas AMIKOM Yogyakarta
+> **Proyek Ujian Akhir Semester (UAS) — Mata Kuliah Pemrograman Web (ST084)**
+> Program Studi S1 Informatika — Fakultas Ilmu Komputer — Universitas AMIKOM Yogyakarta
+> Kelompok Virgo — 2026
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![NestJS](https://img.shields.io/badge/NestJS-Backend-E0234E?logo=nestjs&logoColor=white)](https://nestjs.com/)
-[![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TypeORM](https://img.shields.io/badge/TypeORM-ORM-FE0902)](https://typeorm.io/)
-[![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](#-lisensi)
+[![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
 
 ---
 
-## 📖 Daftar Isi
+## Daftar Isi
 
 1. [Deskripsi Proyek](#-deskripsi-proyek)
-2. [Identitas Pengembang](#-identitas-pengembang)
-3. [Tujuan Aplikasi](#-tujuan-aplikasi)
-4. [Fitur Utama](#-fitur-utama)
-5. [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-6. [Arsitektur Sistem](#-arsitektur-sistem)
-7. [Struktur Direktori Proyek](#-struktur-direktori-proyek)
-8. [Struktur Basis Data (ERD)](#-struktur-basis-data-erd)
-9. [Persyaratan Sistem (Prerequisites)](#-persyaratan-sistem-prerequisites)
-10. [Panduan Instalasi & Menjalankan Aplikasi](#-panduan-instalasi--menjalankan-aplikasi)
-    - [1. Clone Repository](#1-clone-repository)
-    - [2. Konfigurasi & Menjalankan Backend](#2-konfigurasi--menjalankan-backend)
-    - [3. Konfigurasi & Menjalankan Frontend](#3-konfigurasi--menjalankan-frontend)
-11. [Dokumentasi API (Swagger)](#-dokumentasi-api-swagger)
-12. [Daftar Endpoint API](#-daftar-endpoint-api)
-13. [Akun Pengguna Default (Seeder)](#-akun-pengguna-default-seeder)
-14. [Alur Penggunaan Aplikasi](#-alur-penggunaan-aplikasi)
-15. [Tangkapan Layar Aplikasi](#-tangkapan-layar-aplikasi)
-16. [Rencana Pengembangan Selanjutnya](#-rencana-pengembangan-selanjutnya)
-17. [Lisensi](#-lisensi)
+2. [Fitur Utama](#-fitur-utama)
+3. [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+4. [Arsitektur Sistem](#-arsitektur-sistem)
+5. [Struktur Basis Data](#-struktur-basis-data)
+6. [Struktur Direktori Proyek](#-struktur-direktori-proyek)
+7. [Persyaratan Sistem](#-persyaratan-sistem)
+8. [Panduan Instalasi & Menjalankan Aplikasi](#-panduan-instalasi--menjalankan-aplikasi)
+9. [Dokumentasi API (Swagger)](#-dokumentasi-api-swagger)
+10. [Daftar Endpoint API](#-daftar-endpoint-api)
+11. [Akun Default (Seeder)](#-akun-default-seeder)
+12. [Aturan Bisnis Penting](#-aturan-bisnis-penting)
+13. [Kelompok Pengembang](#-kelompok-pengembang)
 
 ---
 
 ## 📝 Deskripsi Proyek
 
-**Sistem Manajemen Perpustakaan** adalah aplikasi web *full-stack* yang dikembangkan sebagai pemenuhan tugas **Ujian Akhir Semester (UAS)** pada mata kuliah **Pemrograman Web**. Aplikasi ini dirancang untuk membantu proses digitalisasi pengelolaan perpustakaan, mencakup manajemen data buku, kategori buku, serta proses peminjaman dan pengembalian buku oleh anggota/pengguna.
+**AksaraHub** adalah sistem informasi perpustakaan digital berbasis web yang menggantikan pencatatan manual (buku besar/spreadsheet) dengan sistem terpusat: katalog buku dengan pencarian & filter kategori, keanggotaan, peminjaman-pengembalian, favorit, ulasan/rating, dan notifikasi — dapat diakses admin maupun anggota secara online.
 
-Aplikasi dibangun dengan pendekatan **arsitektur terpisah (decoupled architecture)**, di mana **backend** berperan sebagai *RESTful API* yang menangani seluruh logika bisnis dan akses basis data, sedangkan **frontend** berperan sebagai antarmuka pengguna (*user interface*) yang mengonsumsi API tersebut.
-
-
-## 🎯 Tujuan Aplikasi
-
-1. Mengimplementasikan konsep **RESTful API** menggunakan framework backend modern (NestJS).
-2. Menerapkan **autentikasi dan otorisasi** pengguna berbasis **JSON Web Token (JWT)**.
-3. Mengimplementasikan operasi **CRUD (Create, Read, Update, Delete)** pada entitas Kategori, Buku, dan Peminjaman.
-4. Menerapkan relasi antar-tabel pada basis data relasional menggunakan **ORM (Object Relational Mapping)**.
-5. Menyediakan dokumentasi API otomatis menggunakan **Swagger/OpenAPI**.
-6. Mengimplementasikan fitur pendukung seperti **paginasi**, **pencarian (search)**, dan **database seeding**.
-7. Membangun antarmuka pengguna yang responsif dan terintegrasi penuh dengan backend API.
+Aplikasi dibangun dengan arsitektur **decoupled**: **backend** NestJS sebagai RESTful API yang menangani seluruh logika bisnis dan akses basis data, **frontend** React yang mengonsumsi API tersebut lewat Axios.
 
 ## ✨ Fitur Utama
 
-### 🔐 Autentikasi & Otorisasi
-- Registrasi dan login pengguna dengan **JWT (JSON Web Token)**.
-- Enkripsi kata sandi menggunakan *hashing* (bcrypt).
-- Proteksi *endpoint* API menggunakan **Guard** dan pembatasan hak akses berbasis peran (*role-based access*: Admin/Petugas & Anggota).
-
-### 📗 Manajemen Kategori Buku
-- Tambah, lihat, ubah, dan hapus data kategori buku.
-
-### 📚 Manajemen Buku
-- Tambah, lihat, ubah, dan hapus data buku (judul, penulis, penerbit, tahun terbit, stok, kategori, dll).
-- **Pencarian (search)** buku berdasarkan judul/penulis.
-- **Paginasi** data buku untuk efisiensi tampilan data dalam jumlah besar.
-
-### 🔄 Manajemen Peminjaman
-- Pencatatan transaksi peminjaman buku oleh anggota.
-- Pencatatan pengembalian buku beserta validasi status.
-- Pembaruan stok buku secara otomatis saat terjadi peminjaman/pengembalian.
-- Riwayat peminjaman per pengguna.
-
-### ⚙️ Fitur Pendukung
-- **Swagger UI** untuk dokumentasi dan pengujian API secara interaktif.
-- **Database Seeder** untuk mengisi data awal (dummy data) secara otomatis.
-- Validasi input pada setiap *request* menggunakan **DTO (Data Transfer Object)** dan `class-validator`.
-- Penanganan galat (*error handling*) yang konsisten di seluruh *endpoint*.
+- **Autentikasi & Otorisasi** — Register, login, refresh token otomatis, ganti password, edit profil. JWT (access + refresh token) dengan role `admin`/`user`.
+- **Manajemen Buku** — CRUD buku (judul, penulis, ISBN, stok, tahun terbit, penerbit, sinopsis, jumlah halaman, cover), **multi-kategori** per buku, pencarian & pagination server-side.
+- **Manajemen Kategori** — CRUD kategori (klasifikasi Dewey Decimal + Fiksi/Nonfiksi/Referensi).
+- **Manajemen Anggota (Member)** — CRUD data keanggotaan, **otomatis tersinkronisasi dua arah** dengan akun login: register user baru otomatis membuat data member, dan admin menambah member baru otomatis membuatkan akun login (password default).
+- **Peminjaman Buku** — Pinjam & kembalikan buku (stok ter-update otomatis), riwayat peminjaman pribadi, rekap seluruh peminjaman untuk admin.
+- **Favorit** — Tandai/batalkan buku favorit, tersimpan per akun di database (bukan localStorage).
+- **Ulasan & Rating** — Beri rating 1–5 + komentar per buku, **moderasi admin** (pending → approved/rejected) sebelum tampil publik.
+- **Notifikasi** — Notifikasi in-app per pengguna, tandai sudah dibaca (satu/semua).
+- **Dashboard & Statistik Admin** — Rekap jumlah buku, kategori, penulis, penerbit, distribusi tahun terbit, dan ketersediaan stok — dihitung langsung dari database.
+- **Dokumentasi API otomatis** via Swagger UI.
+- **Database seeding otomatis** — data awal (admin, kategori, buku) terisi sendiri saat aplikasi pertama kali dijalankan.
 
 ## 🛠 Teknologi yang Digunakan
 
 ### Backend
 | Teknologi | Fungsi |
 |---|---|
-| **NestJS** | Framework backend berbasis Node.js dan TypeScript |
-| **TypeORM** | ORM untuk pemetaan objek ke basis data relasional |
-| **MySQL** | Sistem manajemen basis data relasional |
-| **JWT (JSON Web Token)** | Mekanisme autentikasi berbasis token |
-| **Passport.js** | Middleware strategi autentikasi |
-| **bcrypt** | Enkripsi (hashing) kata sandi pengguna |
-| **class-validator & class-transformer** | Validasi dan transformasi data request |
+| **NestJS 11** | Framework backend berbasis Node.js + TypeScript |
+| **TypeORM** | ORM ke basis data relasional |
+| **MySQL 8** | Sistem manajemen basis data |
+| **JWT (access + refresh token)** | Autentikasi, via `@nestjs/jwt` + `passport-jwt` |
+| **bcrypt** | Hashing password |
+| **class-validator / class-transformer** | Validasi & transformasi DTO |
 | **Swagger (OpenAPI)** | Dokumentasi API interaktif |
 
 ### Frontend
 | Teknologi | Fungsi |
 |---|---|
-| **React** | Library untuk membangun antarmuka pengguna |
-| **TypeScript** | Superset JavaScript dengan penambahan tipe data statis |
-| **Vite** | Build tool dan development server frontend |
-| **Tailwind CSS & shadcn/ui** | Kerangka kerja tampilan (styling) dan komponen UI |
-| **Axios / Fetch API** | Klien HTTP untuk komunikasi dengan backend API |
-
-> ℹ️ **Catatan:** Sesuaikan tabel teknologi di atas dengan *package.json* aktual pada masing-masing folder `backend` dan `frontend` apabila terdapat perbedaan pustaka yang digunakan.
+| **React 18** | Library UI |
+| **Vite** | Build tool & dev server |
+| **Tailwind CSS** | Styling |
+| **React Router** | Routing |
+| **Axios** | HTTP client (dengan interceptor auto-refresh token) |
 
 ## 🏗 Arsitektur Sistem
 
-Aplikasi ini menggunakan arsitektur **Client-Server** dengan pemisahan tanggung jawab yang jelas antara backend dan frontend:
-
 ```
-┌─────────────────────┐        HTTP/REST (JSON)        ┌──────────────────────┐
-│                      │  ────────────────────────────▶ │                      │
-│   Frontend (React)   │                                 │   Backend (NestJS)   │
-│   - UI/UX            │  ◀──────────────────────────── │   - REST API         │
-│   - State Management │        JWT Bearer Token         │   - Business Logic   │
-│                      │                                 │   - Authentication   │
-└─────────────────────┘                                 └───────────┬──────────┘
-                                                                      │
-                                                                      │ TypeORM
-                                                                      ▼
-                                                          ┌──────────────────────┐
-                                                          │   MySQL Database     │
-                                                          │   - users            │
-                                                          │   - categories       │
-                                                          │   - books            │
-                                                          │   - borrowings       │
-                                                          └──────────────────────┘
+┌──────────────────────┐        HTTP/REST (JSON)        ┌──────────────────────┐
+│   Frontend (React)    │  ─────────────────────────────▶│   Backend (NestJS)    │
+│   - UI/UX              │                                 │   - REST API /api     │
+│   - Context (Auth,     │ ◀─────────────────────────────  │   - Business Logic    │
+│     Favorite, Notif)   │        JWT Bearer Token          │   - JWT Auth Guard    │
+└──────────────────────┘                                 └───────────┬──────────┘
+                                                                        │ TypeORM
+                                                                        ▼
+                                                            ┌──────────────────────┐
+                                                            │     MySQL Database     │
+                                                            └──────────────────────┘
 ```
 
-Pola arsitektur backend mengikuti struktur **modular** khas NestJS, dengan pemisahan tiap domain fungsional (Auth, User, Category, Book, Borrowing) ke dalam modul masing-masing yang terdiri atas **Controller** (menangani *request/response*), **Service** (logika bisnis), **Entity** (representasi tabel basis data), dan **DTO** (validasi data).
+Backend mengikuti struktur modular NestJS — setiap domain (`auth`, `book`, `category`, `member`, `user`, `favorite`, `review`, `notification`, `borrowing`) punya Controller–Service–Entity–DTO sendiri.
+
+## 🗄 Struktur Basis Data
+
+```mermaid
+erDiagram
+  USERS ||--o| MEMBERS : "tertaut ke"
+  USERS ||--o{ BORROWINGS : melakukan
+  USERS ||--o{ FAVORITES : menandai
+  USERS ||--o{ REVIEWS : menulis
+  USERS ||--o{ NOTIFICATIONS : menerima
+  BOOKS }o--o{ CATEGORIES : "dikelompokkan (many-to-many)"
+  BOOKS ||--o{ BORROWINGS : dipinjam
+  BOOKS ||--o{ FAVORITES : ditandai
+  BOOKS ||--o{ REVIEWS : diulas
+
+  USERS { varchar id PK, varchar name, varchar email, varchar password, enum role }
+  BOOKS { varchar id PK, varchar title, varchar author, varchar isbn, int stock, int publishedYear, varchar publisher, varchar cover }
+  CATEGORIES { varchar id PK, varchar name }
+  MEMBERS { varchar id PK, varchar memberNumber, enum status, enum borrowStatus, varchar user_id FK }
+  BORROWINGS { varchar id PK, enum status, datetime borrowDate, datetime returnDate, varchar user_id FK, varchar book_id FK }
+  FAVORITES { varchar id PK, varchar user_id FK, varchar book_id FK }
+  REVIEWS { varchar id PK, int rating, varchar comment, enum status, varchar user_id FK, varchar book_id FK }
+  NOTIFICATIONS { varchar id PK, varchar title, enum type, boolean isRead, varchar user_id FK }
+```
+
+Relasi `books` ↔ `categories` bersifat **many-to-many** (lewat tabel pivot `book_categories`) — satu buku bisa punya beberapa kategori sekaligus.
 
 ## 📁 Struktur Direktori Proyek
 
 ```
 ProgWebUASManagementPerpus/
-│
-├── backend/                     # Aplikasi server (NestJS REST API)
+├── backend/                      # NestJS REST API
 │   ├── src/
-│   │   ├── auth/                 # Modul autentikasi (login, register, JWT strategy)
-│   │   ├── users/                # Modul manajemen pengguna
-│   │   ├── categories/           # Modul manajemen kategori buku
-│   │   ├── books/                # Modul manajemen buku
-│   │   ├── borrowings/           # Modul manajemen peminjaman buku
-│   │   ├── database/
-│   │   │   └── seeder/           # Script seeding data awal
+│   │   ├── auth/                  # Register, login, refresh token, profil
+│   │   ├── book/                  # CRUD buku + pagination/search + multi-kategori
+│   │   ├── category/              # CRUD kategori
+│   │   ├── user/                  # Kelola akun login (admin only)
+│   │   ├── member/                # Kelola keanggotaan (auto-sync ke user)
+│   │   ├── favorite/               # Favorit buku per pengguna
+│   │   ├── review/                 # Ulasan & moderasi
+│   │   ├── notification/           # Notifikasi in-app
+│   │   ├── borrowing/              # Pinjam & kembalikan buku
+│   │   ├── seeder/                 # Auto-seed data awal saat start
 │   │   ├── app.module.ts
-│   │   └── main.ts               # Entry point aplikasi + konfigurasi Swagger
-│   ├── .env.example              # Contoh konfigurasi environment
-│   └── package.json
-│
-├── frontend/                    # Aplikasi klien (React)
-│   ├── src/
-│   │   ├── components/           # Komponen UI reusable
-│   │   ├── pages/                # Halaman aplikasi (Login, Dashboard, Buku, dll)
-│   │   ├── services/              # Konfigurasi axios/fetch ke backend API
-│   │   └── App.tsx
+│   │   └── main.ts                 # Entry point + ValidationPipe + Swagger
 │   ├── .env.example
 │   └── package.json
 │
-├── .gitignore
+├── frontend/                     # React + Vite
+│   ├── src/
+│   │   ├── components/             # BookCard, modal admin, dsb.
+│   │   ├── contexts/                # AuthContext, FavoriteContext, NotificationContext
+│   │   ├── pages/                   # Explore, Library, BookDetail, MyBorrowings, dsb.
+│   │   │   └── admin/                # Dashboard, Books, Categories, Users, Reviews, Borrowings, Statistics
+│   │   ├── services/                 # authApi, bookApi, borrowingApi, dst. + httpClient (axios)
+│   │   └── layouts/App.jsx
+│   ├── .env.example
+│   └── package.json
+│
 └── README.md
 ```
 
-> ℹ️ **Catatan:** Struktur di atas merupakan representasi umum arsitektur modular NestJS + React. Silakan sesuaikan penamaan folder/file dengan kondisi aktual pada repositori Anda.
+## 💻 Persyaratan Sistem
 
-## 🗄 Struktur Basis Data (ERD)
-
-Aplikasi menggunakan basis data relasional **MySQL** dengan entitas utama sebagai berikut:
-
-```
-┌────────────────┐        ┌─────────────────┐        ┌────────────────┐
-│     users       │        │   borrowings     │        │     books       │
-├────────────────┤        ├─────────────────┤        ├────────────────┤
-│ id (PK)         │───┐    │ id (PK)          │    ┌───│ id (PK)         │
-│ name            │   └───▶│ user_id (FK)     │    │   │ title           │
-│ email           │        │ book_id (FK)     │◀───┘   │ author          │
-│ password        │        │ borrow_date      │        │ publisher       │
-│ role            │        │ due_date         │        │ year            │
-│ created_at      │        │ return_date      │        │ stock           │
-└────────────────┘        │ status           │        │ category_id (FK)│──┐
-                            │ created_at       │        │ created_at      │  │
-                            └─────────────────┘        └────────────────┘  │
-                                                                              │
-                                                          ┌────────────────┐  │
-                                                          │   categories    │◀─┘
-                                                          ├────────────────┤
-                                                          │ id (PK)         │
-                                                          │ name            │
-                                                          │ created_at      │
-                                                          └────────────────┘
-```
-
-**Relasi antar-tabel:**
-- Satu `category` dapat memiliki banyak `book` (**One-to-Many**).
-- Satu `user` dapat melakukan banyak `borrowing` (**One-to-Many**).
-- Satu `book` dapat memiliki banyak riwayat `borrowing` (**One-to-Many**).
-
-> ℹ️ **Catatan:** Sesuaikan nama kolom/tabel pada diagram di atas dengan definisi *entity* aktual pada folder `backend/src/**/entities`.
-
-## 💻 Persyaratan Sistem (Prerequisites)
-
-Sebelum menjalankan aplikasi, pastikan perangkat yang digunakan telah terpasang perangkat lunak berikut:
-
-| Perangkat Lunak | Versi Minimum | Tautan Unduh |
-|---|---|---|
-| **Node.js** | v18.x atau lebih baru | https://nodejs.org/ |
-| **npm** | v9.x (terpasang bersama Node.js) | — |
-| **MySQL** | v8.x | https://dev.mysql.com/downloads/ |
-| **Git** | Versi terbaru | https://git-scm.com/ |
-| **Code Editor** (disarankan) | VS Code | https://code.visualstudio.com/ |
+| Perangkat Lunak | Versi Minimum |
+|---|---|
+| **Node.js** | v18+ |
+| **npm** | terpasang bersama Node.js |
+| **MySQL** | v8+ |
+| **Git** | versi terbaru |
 
 ## 🚀 Panduan Instalasi & Menjalankan Aplikasi
 
-Berikut adalah langkah-langkah lengkap untuk menjalankan aplikasi ini secara lokal, mulai dari pengambilan kode sumber hingga aplikasi dapat diakses melalui browser.
-
 ### 1. Clone Repository
-
 ```bash
 git clone https://github.com/adisalafudin-dev/ProgWebUASManagementPerpus.git
 cd ProgWebUASManagementPerpus
 ```
 
-### 2. Konfigurasi & Menjalankan Backend
+### 2. Backend
 
-**a. Masuk ke direktori backend**
 ```bash
 cd backend
-```
-
-**b. Instalasi dependensi**
-```bash
 npm install
+cp .env.example .env
 ```
 
-**c. Konfigurasi variabel lingkungan (environment variables)**
-
-Buat file `.env` pada folder `backend` (dapat menyalin dari `.env.example` jika tersedia), lalu sesuaikan dengan konfigurasi lokal:
-
+Isi `.env`:
 ```env
-# Konfigurasi Server
-PORT=3000
-
-# Konfigurasi Database MySQL
 DB_HOST=localhost
 DB_PORT=3306
 DB_USERNAME=root
 DB_PASSWORD=
-DB_NAME=perpustakaan_db
-
-# Konfigurasi JWT
-JWT_SECRET=isi_dengan_kunci_rahasia_anda
+DB_NAME=perpustakaan_digital
+JWT_SECRET=ganti-dengan-string-acak-panjang
 JWT_EXPIRES_IN=1d
+JWT_REFRESH_EXPIRES_IN=7d
+PORT=3001
 ```
+> ⚠️ **Set `PORT=3001`** — `.env.example` frontend sudah mengasumsikan backend jalan di port `3001`. Kalau tetap pakai default `3000`, ubah juga `VITE_API_URL` di `.env` frontend supaya keduanya cocok.
 
-**d. Membuat basis data**
-
-Buat basis data baru pada MySQL sesuai nama pada `DB_NAME` (contoh: `perpustakaan_db`), misalnya melalui MySQL CLI atau phpMyAdmin:
-
+Buat database (nama harus sama persis dengan `DB_NAME`):
 ```sql
-CREATE DATABASE perpustakaan_db;
+CREATE DATABASE perpustakaan_digital;
 ```
 
-**e. Menjalankan seeder (opsional, untuk data awal)**
-```bash
-npm run seed
-```
-
-**f. Menjalankan server backend (mode development)**
+Jalankan server:
 ```bash
 npm run start:dev
 ```
+Backend berjalan di `http://localhost:3001`. **Tidak perlu perintah seed terpisah** — saat aplikasi pertama kali start dan tabel masih kosong, data awal (1 akun admin, 13 kategori, 30 buku) otomatis terisi lewat `SeederService`. Seeder ini idempotent — kalau data sudah ada, dilewati begitu saja di start berikutnya.
 
-Setelah berhasil, backend akan berjalan pada `http://localhost:3000`.
+### 3. Frontend
 
-### 3. Konfigurasi & Menjalankan Frontend
-
-**a. Buka terminal baru, lalu masuk ke direktori frontend**
+Buka terminal baru:
 ```bash
 cd frontend
-```
-
-**b. Instalasi dependensi**
-```bash
 npm install
+cp .env.example .env
 ```
 
-**c. Konfigurasi variabel lingkungan**
-
-Buat file `.env` pada folder `frontend`:
-
+Isi `.env` (pastikan port-nya sama dengan backend):
 ```env
-VITE_API_BASE_URL=http://localhost:3000
+VITE_API_URL=http://localhost:3001/api
+VITE_API_TIMEOUT=10000
 ```
 
-**d. Menjalankan aplikasi frontend**
+Jalankan:
 ```bash
 npm run dev
 ```
-
-Setelah berhasil, aplikasi frontend dapat diakses melalui `http://localhost:5173` (port default Vite).
-
-> ℹ️ **Catatan:** Perintah dan port di atas mengikuti konfigurasi standar NestJS (`start:dev`, port 3000) dan Vite+React (`dev`, port 5173). Silakan sesuaikan dengan skrip yang tertulis pada masing-masing `package.json` bila terdapat perbedaan.
+Frontend dapat diakses di `http://localhost:5173`.
 
 ## 📑 Dokumentasi API (Swagger)
 
-Backend telah dilengkapi dokumentasi API otomatis menggunakan **Swagger (OpenAPI)**. Setelah server backend berjalan, dokumentasi dapat diakses melalui:
-
+Setelah backend berjalan, dokumentasi interaktif tersedia di:
 ```
-http://localhost:3000/api
+http://localhost:3001/api/docs
 ```
-
-Melalui halaman ini, dosen penilai maupun pengguna dapat melihat seluruh *endpoint* yang tersedia, struktur *request/response*, serta melakukan pengujian API secara langsung (*try it out*) tanpa memerlukan aplikasi klien tambahan seperti Postman.
+Seluruh endpoint dapat dicoba langsung (*try it out*) dari halaman ini, termasuk endpoint yang butuh JWT (klik tombol **Authorize** dan tempel access token).
 
 ## 🔗 Daftar Endpoint API
 
-Berikut ringkasan *endpoint* utama yang tersedia pada REST API:
+Base URL: `http://localhost:3001/api`
 
-### Autentikasi
-| Method | Endpoint | Deskripsi | Akses |
-|---|---|---|---|
-| `POST` | `/auth/register` | Registrasi pengguna baru | Publik |
-| `POST` | `/auth/login` | Login dan memperoleh JWT token | Publik |
+| Modul | Endpoint Utama | Akses |
+|---|---|---|
+| **Auth** | `POST /auth/register`, `POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`, `GET/PATCH /auth/me`, `POST /auth/change-password` | Publik / Login |
+| **Books** | `GET /books`, `GET /books/search`, `GET /books/:id`, `POST\|PUT\|PATCH\|DELETE /books/:id` | Publik (baca) / Admin (tulis) |
+| **Categories** | `GET /categories`, `POST\|PUT\|PATCH\|DELETE /categories/:id` | Login / Admin |
+| **Users** | `GET/POST/PUT/PATCH/DELETE /users`, `PATCH /users/:id/role` | Admin |
+| **Members** | `GET/POST/PATCH/DELETE /members` | Admin |
+| **Favorites** | `GET/POST /favorites`, `GET /favorites/check/:bookId`, `DELETE /favorites/:id` \| `/favorites/book/:bookId` | Login |
+| **Reviews** | `GET/POST/PUT/DELETE /reviews`, `GET /books/:bookId/reviews`, `PATCH /reviews/:id/moderate` | Login / Admin (moderate) |
+| **Notifications** | `GET /notifications`, `GET /notifications/unread-count`, `PATCH /notifications/:id/read`, `PATCH /notifications/read-all` | Login |
+| **Borrowings** | `POST /borrowings`, `PATCH /borrowings/:id/return`, `GET /borrowings/me`, `GET /borrowings` | Login / Admin (lihat semua) |
 
-### Kategori Buku
-| Method | Endpoint | Deskripsi | Akses |
-|---|---|---|---|
-| `GET` | `/categories` | Menampilkan seluruh kategori | Terautentikasi |
-| `POST` | `/categories` | Menambahkan kategori baru | Admin |
-| `PATCH` | `/categories/:id` | Memperbarui data kategori | Admin |
-| `DELETE` | `/categories/:id` | Menghapus data kategori | Admin |
+Detail lengkap request/response tiap endpoint ada di Swagger UI.
 
-### Buku
-| Method | Endpoint | Deskripsi | Akses |
-|---|---|---|---|
-| `GET` | `/books?page=1&limit=10&search=` | Menampilkan daftar buku (dengan paginasi & pencarian) | Terautentikasi |
-| `GET` | `/books/:id` | Menampilkan detail buku | Terautentikasi |
-| `POST` | `/books` | Menambahkan buku baru | Admin |
-| `PATCH` | `/books/:id` | Memperbarui data buku | Admin |
-| `DELETE` | `/books/:id` | Menghapus data buku | Admin |
-
-### Peminjaman
-| Method | Endpoint | Deskripsi | Akses |
-|---|---|---|---|
-| `GET` | `/borrowings` | Menampilkan seluruh transaksi peminjaman | Admin |
-| `GET` | `/borrowings/me` | Menampilkan riwayat peminjaman milik pengguna login | Terautentikasi |
-| `POST` | `/borrowings` | Membuat transaksi peminjaman baru | Terautentikasi |
-| `PATCH` | `/borrowings/:id/return` | Memproses pengembalian buku | Admin |
-
-> ℹ️ **Catatan:** Tabel di atas merupakan gambaran umum *endpoint* berdasarkan alur bisnis aplikasi. Silakan sesuaikan nama *route*, parameter, dan hak akses persis dengan implementasi pada folder `backend/src/**/*.controller.ts`, atau rujuk langsung ke Swagger UI untuk daftar yang akurat dan terkini.
-
-## 🔑 Akun Pengguna Default (Seeder)
-
-Apabila perintah `npm run seed` dijalankan, sistem akan membuat akun contoh berikut untuk keperluan pengujian:
+## 🔑 Akun Default (Seeder)
 
 | Role | Email | Password |
 |---|---|---|
-| Admin/Petugas | `admin@perpustakaan.com` | `password123` |
-| Anggota | `member@perpustakaan.com` | `password123` |
+| Admin | `admin@perpustakaan.com` | `admin123` |
 
-> ⚠️ **Catatan Keamanan:** Kredensial di atas hanya digunakan untuk keperluan demonstrasi/pengujian pada lingkungan lokal (*development*) dan **wajib diganti** apabila aplikasi akan digunakan pada lingkungan produksi.
+> ⚠️ Ganti password ini lewat halaman Profil setelah login pertama kali kalau aplikasi dipakai di luar lingkungan demo/lokal.
 
-## 🔄 Alur Penggunaan Aplikasi
+## ⚙️ Aturan Bisnis Penting
 
-1. **Registrasi/Login** — Pengguna melakukan registrasi akun atau login menggunakan akun yang telah terdaftar.
-2. **Autentikasi** — Sistem memvalidasi kredensial dan mengembalikan JWT token yang digunakan untuk mengakses *endpoint* yang terproteksi.
-3. **Manajemen Data (Admin)** — Admin/petugas mengelola data kategori dan buku (tambah, ubah, hapus).
-4. **Peminjaman Buku (Anggota)** — Anggota memilih buku yang tersedia dan mengajukan peminjaman; stok buku berkurang secara otomatis.
-5. **Pengembalian Buku** — Admin memproses pengembalian buku; stok buku diperbarui kembali.
-6. **Riwayat & Laporan** — Pengguna dan admin dapat melihat riwayat transaksi peminjaman.
+- **Sinkronisasi User ↔ Member**: register akun baru otomatis membuat data keanggotaan; admin menambah member baru otomatis membuatkan akun login dengan password default `password` (ditampilkan sekali di respons saat pembuatan — segera diinformasikan ke anggota terkait untuk login & ganti password).
+- **Moderasi ulasan**: ulasan baru/hasil edit selalu berstatus `pending`, baru tampil publik setelah disetujui admin.
+- **Stok buku**: berkurang otomatis saat dipinjam, bertambah otomatis saat dikembalikan; peminjaman ditolak kalau stok habis.
+- **Validasi ketat**: setiap request divalidasi (`whitelist` + `forbidNonWhitelisted`) — field yang tidak dikenali DTO akan ditolak (400), bukan diabaikan.
 
-## 🖼 Tangkapan Layar Aplikasi
+## 👥 Kelompok Pengembang — Kelompok Virgo
 
-> Tambahkan tangkapan layar (*screenshot*) aplikasi pada bagian ini untuk memperjelas gambaran antarmuka kepada dosen penilai. Contoh format penyematan gambar:
-
-```markdown
-### Halaman Login
-![Halaman Login](./docs/screenshots/login.png)
-
-### Dashboard Manajemen Buku
-![Dashboard Buku](./docs/screenshots/dashboard-books.png)
-
-### Swagger API Documentation
-![Swagger UI](./docs/screenshots/swagger.png)
-```
-
-## 🔮 Rencana Pengembangan Selanjutnya
-
-- [ ] Fitur notifikasi keterlambatan pengembalian buku (denda).
-- [ ] Fitur ekspor laporan peminjaman ke format PDF/Excel.
-- [ ] Fitur unggah gambar sampul buku.
-- [ ] Implementasi *role* tambahan (misalnya Kepala Perpustakaan).
-- [ ] Pengujian otomatis (*unit testing* & *e2e testing*).
-
-## 📄 Lisensi
-
-Proyek ini dibuat untuk keperluan **akademik** sebagai pemenuhan tugas Ujian Akhir Semester (UAS) mata kuliah Pemrograman Web di Universitas AMIKOM Yogyakarta, dan didistribusikan di bawah [Lisensi MIT](https://opensource.org/licenses/MIT) untuk keperluan pembelajaran.
+| Nama | NIM | Bagian |
+|---|---|---|
+| Andra Satya Pratama | 24.11.6056 | Halaman Login & Register, Pencarian, Peminjaman Buku |
+| Fauzy Virgiocesa Agyas S | 24.11.6066 | Detail Buku (Favorit & Ulasan), Notifikasi, Riwayat Peminjaman |
+| Adi Salafudin | 24.11.6093 | Halaman Admin (Dashboard, CRUD, Moderasi, Statistik) |
 
 ---
 
-<p align="center">
-  Dibuat dengan 💻 dan ☕ oleh <b>Adi Salafudin</b> — S1 Informatika, Universitas AMIKOM Yogyakarta
-</p>
+Proyek ini dibuat untuk keperluan akademik — Ujian Akhir Semester mata kuliah Pemrograman Web (ST084), Universitas AMIKOM Yogyakarta, 2026.
