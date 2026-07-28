@@ -105,14 +105,62 @@ erDiagram
   BOOKS ||--o{ FAVORITES : ditandai
   BOOKS ||--o{ REVIEWS : diulas
 
-  USERS { varchar id PK, varchar name, varchar email, varchar password, enum role }
-  BOOKS { varchar id PK, varchar title, varchar author, varchar isbn, int stock, int publishedYear, varchar publisher, varchar cover }
-  CATEGORIES { varchar id PK, varchar name }
-  MEMBERS { varchar id PK, varchar memberNumber, enum status, enum borrowStatus, varchar user_id FK }
-  BORROWINGS { varchar id PK, enum status, datetime borrowDate, datetime returnDate, varchar user_id FK, varchar book_id FK }
-  FAVORITES { varchar id PK, varchar user_id FK, varchar book_id FK }
-  REVIEWS { varchar id PK, int rating, varchar comment, enum status, varchar user_id FK, varchar book_id FK }
-  NOTIFICATIONS { varchar id PK, varchar title, enum type, boolean isRead, varchar user_id FK }
+  USERS {
+    varchar id PK
+    varchar name
+    varchar email
+    varchar password
+    enum role
+  }
+  BOOKS {
+    varchar id PK
+    varchar title
+    varchar author
+    varchar isbn
+    int stock
+    int publishedYear
+    varchar publisher
+    varchar cover
+  }
+  CATEGORIES {
+    varchar id PK
+    varchar name
+  }
+  MEMBERS {
+    varchar id PK
+    varchar memberNumber
+    enum status
+    enum borrowStatus
+    varchar user_id FK
+  }
+  BORROWINGS {
+    varchar id PK
+    enum status
+    datetime borrowDate
+    datetime returnDate
+    varchar user_id FK
+    varchar book_id FK
+  }
+  FAVORITES {
+    varchar id PK
+    varchar user_id FK
+    varchar book_id FK
+  }
+  REVIEWS {
+    varchar id PK
+    int rating
+    varchar comment
+    enum status
+    varchar user_id FK
+    varchar book_id FK
+  }
+  NOTIFICATIONS {
+    varchar id PK
+    varchar title
+    enum type
+    boolean isRead
+    varchar user_id FK
+  }
 ```
 
 Relasi `books` ↔ `categories` bersifat **many-to-many** (lewat tabel pivot `book_categories`) — satu buku bisa punya beberapa kategori sekaligus.
